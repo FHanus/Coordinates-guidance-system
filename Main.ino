@@ -2,71 +2,77 @@
 #include <WiFiClient.h>
 #include <WebServer.h>
  
-#include "index.h" //Our HTML webpage contents with javascripts
+#include "index.h" 
  
-#define LED 2  //On board LED
+#define LED 2 
  
-//SSID and Password of your WiFi router
+// Údaje k AP
 const char* ssid = "ESP";
 const char* password = "123456789";
  
-WebServer server(80); //Server on port 80
+WebServer server(80);
 
 //===============================================================
-// Declare variables
+// Proměnné (Pro pozdější testování)
 //===============================================================
 
 int X1 = NULL;
 
  
 //===============================================================
-// This routine is executed when you open its IP in browser
+// Ovládání stránky
 //===============================================================
 
-void Coord(){
+// Zde bude později odkaz na algoritmus pro získání souřadnic, pro teď pouze náhodná hodnota X
+void Coord(){             
   X1 = random(300);
 }
 
+// Načte HTML hodnoty stránky
 void handleRoot() {
- String s = MAIN_page; //Read HTML contents
- server.send(200, "text/html", s); //Send web page
+ String s = MAIN_page; 
+ // Pošle webovou stránku serveru
+ server.send(200, "text/html", s); 
 }
  
 void handleValues() {
  Coord();
  String X1value = String(X1);
  Serial.print(X1);
- server.send(200, "text/plane", X1value); //Send ADC value only to client ajax request
+ // Pošle hodnotu X na ajax požadavek
+ server.send(200, "text/plane", X1value); 
 }
  
 void handleLED() {
  String ledState = "OFF";
- String t_state = server.arg("LEDstate"); //Refer  xhttp.open("GET", "setLED?LEDstate="+led, true);
+
+ // Odkazuje na xhttp.open("GET", "setLED?LEDstate="+led, true); v index.h
+ String t_state = server.arg("LEDstate"); 
  Serial.println(t_state);
+
+ // Ovládání LED
  if(t_state == "1")
  {
-  digitalWrite(LED,LOW); //LED ON
-  ledState = "ON"; //Feedback parameter
+  digitalWrite(LED,LOW); 
+  ledState = "ON"; 
  }
  else
  {
-  digitalWrite(LED,HIGH); //LED OFF
-  ledState = "OFF"; //Feedback parameter  
+  digitalWrite(LED,HIGH); 
+  ledState = "OFF";   
  }
- 
- server.send(200, "text/plane", ledState); //Send web page
+ // Pošle webovou stránku serveru (Ano, podruhé..?)
+ server.send(200, "text/plane", ledState); 
 }
 //==============================================================
-//                  SETUP
+// Setup
 //==============================================================
 void setup(void){
   Serial.begin(115200);
-  
-  //ESP32 As access point
-  WiFi.mode(WIFI_AP); //Access Point mode
+
+  WiFi.mode(WIFI_AP); 
   WiFi.softAP(ssid, password);
  
-  //Onboard LED port Direction output
   pinMode(LED,OUTPUT); 
   
   Serial.println("Connecting to ");
@@ -77,16 +83,17 @@ void setup(void){
   Serial.print("AP IP address: ");
   Serial.println(IP);
  
-  server.on("/", handleRoot);      //Which routine to handle at root location. This is display page
+  server.on("/", handleRoot);      
   server.on("/setLED", handleLED);
   server.on("/readValues", handleValues);
  
-  server.begin();                  //Start server
+  server.begin();                  
   Serial.println("HTTP server started");
 }
 //==============================================================
-//                     LOOP
+// Loop
 //==============================================================
 void loop(void){
-  server.handleClient();          //Handle client requests
+  server.handleClient();       
 }
+
