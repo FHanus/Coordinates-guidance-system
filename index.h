@@ -51,7 +51,7 @@ const char MAIN_page[] PROGMEM = R"=====(
       
       <tr>
 
-        <!-- ===== Zde je zatím jediný place holder pro hodnotu (Později doplním pro každou souřadnici) ===== -->
+        <!-- ===== Zatím jediný place holder pro hodnotu (Později doplním pro každou souřadnici) ===== -->
 
         <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 1</td>
         <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X1Value">0</span></td>
@@ -77,7 +77,7 @@ const char MAIN_page[] PROGMEM = R"=====(
 
 <script>
 
-  <!-- ===== Zde funkce tlačítek ===== -->
+  <!-- ===== Funkce tlačítek ===== -->
 
   function sendData(led) 
   {
@@ -98,7 +98,7 @@ setInterval(function(){ getData();},2000);
 
 function getData() 
 
-  <!-- ===== Zde funkce načítání hodnot do tabulky ===== -->
+  <!-- ===== Funkce načítání hodnot do tabulky ===== -->
 
   {
     var xhttp = new XMLHttpRequest();
@@ -118,4 +118,3 @@ function getData()
 </body>
 </html>
 )=====";
-
