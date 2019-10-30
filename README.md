@@ -14,7 +14,7 @@
     * Finished 3D model of construction, ready to print it. 
 
 * 29/10/20119
-    * Finished WEB site control. 
+    * Finished WEB site with control. 
     
 * < 10/2019
     * 90% of construction done.
