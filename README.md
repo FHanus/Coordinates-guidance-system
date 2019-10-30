@@ -6,6 +6,8 @@
 
 * ***Motor control.ino***    -> Code to step with two parallel motors in X direction. Will add Y direction later.
 
+* ***Sources.txt***          -> All of the sources I used.
+
 
 
 ## Development progress
