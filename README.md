@@ -2,8 +2,9 @@
 
 ## Parts
 
-Main.ino + index.h   -> WEB site with control code
-Motor control.ino    -> Code to step with two parallel motors in X direction. Will add Y direction later.
+* ***Main.ino + index.h***   -> WEB site with control code
+
+* ***Motor control.ino***    -> Code to step with two parallel motors in X direction. Will add Y direction later.
 
 
 
