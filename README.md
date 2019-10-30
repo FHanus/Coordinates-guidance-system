@@ -1,5 +1,5 @@
 # Coordinates guidance system
-### Filip Hanuš - Střední průmyslová škola na Proseku
+Filip Hanuš - Střední průmyslová škola na Proseku
 
 ## Parts
 
