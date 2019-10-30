@@ -1,6 +1,6 @@
 ## Coordinates guidance system
 
-## Parts
+# Parts
 
 * ***Main.ino + index.h***   -> WEB site with control code
 
@@ -10,7 +10,7 @@
 
 
 
-## Development progress
+# Development progress
 
 * 30/10/20119
     * Finished 3D model of construction, ready to print it. 
