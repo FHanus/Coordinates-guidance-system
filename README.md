@@ -14,7 +14,7 @@
 ## Development progress
 
 * 30/10/20119
-    * Finished 3D model of construction, ready to print it. 
+    * Finished last part of 3D model of construction, ready to print it. 
 
 * 29/10/20119
     * Finished WEB site with control. 
