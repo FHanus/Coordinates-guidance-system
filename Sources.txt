@@ -1,0 +1,35 @@
+// Inspirace
+https://www.norwegiancreations.com/projects/big-plotter/
+https://www.norwegiancreations.com/2013/09/building-a-laser-engraver-part-2-some-technical-insights/
+
+// Belt
+https://blog.prusaprinters.org/calculator/
+
+// Drivery k motorům
+https://lastminuteengineers.com/a4988-stepper-motor-driver-arduino-tutorial/
+https://www.pololu.com/product/1182
+https://cdn.hackaday.io/images/4997571490134825649.png
+
+// ESP32 jako AP  
+https://circuits4you.com/2018/02/04/esp8266-ajax-update-part-of-web-page-without-refreshing/
+https://randomnerdtutorials.com/esp32-access-point-ap-web-server/
+
+// Web HTML
+https://www.w3schools.com/bootstrap/bootstrap_buttons.asp
+
+// GY-VL53L0X Senzor vzdálenosti
+https://www.st.com/resource/en/datasheet/vl53l0x.pdf
+https://www.pololu.com/product/2490
+https://www.laskarduino.cz/laserovy-senzor-vzdalenosti-gy-vl53l0x-i2c/?gclid=CjwKCAjw5_DsBRBPEiwAIEDRWz3SiPEsDfT4zm2GKPy9hDAwxnL_3Xykf9Nc_es5Z8Hgb4B78IJolRoCISAQAvD_BwE
+
+// Konstrukce
+https://www.ehlinik.cz/stavebnicovy-system-kombi/kat-I200000101.html
+
+// Použití ESP32
+https://www.quora.com/What-is-ESP32-and-how-is-it-different-from-Arduino
+https://www.youtube.com/watch?v=jpVcCmh8sig
+
+(https://github.com/micropython/micropython/wiki/Performance)
+
+// Tlačítka 
+https://www.aliexpress.com/item/32799925463.html?spm=a2g0s.9042311.0.0.27424c4dW5LQ9V
