@@ -7,6 +7,8 @@
 
 * ***Motor control.ino***    -> Code to step with two parallel motors in X direction. Will add Y direction later.
 
+* ***Inventor-DMP.zip***     -> 3D model.
+
 * ***Sources.txt***          -> All of the sources I used.
 
 
