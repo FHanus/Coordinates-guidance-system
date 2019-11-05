@@ -7,7 +7,7 @@
 
 * ***Motor control.ino***    -> Code to step with two parallel motors in X direction. Will add Y direction later.
 
-* ***Inventor-DMP.zip***     -> 3D model.
+* ***Inventor - DMP.zip***    -> 3D model.
 
 * ***Sources.txt***          -> All of the sources I used.
 
@@ -15,10 +15,13 @@
 
 ## Development progress
 
-* 30/10/20119
-    * Finished last part of 3D model of construction, ready to print it. 
+* 05/11/2019
+    * Finished final 3D model of construction, ready to print it. 
 
-* 29/10/20119
+* 30/10/2019
+    * Finished last part of 3D model mechanism. 
+
+* 29/10/2019
     * Finished WEB site with java script to show values and to control functions.
     
 * < 10/2019
