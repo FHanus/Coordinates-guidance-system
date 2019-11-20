@@ -28,13 +28,13 @@ const char MAIN_page[] PROGMEM = R"=====(
 <div id="demo" align="center">
 
     <button type="button" onclick="sendData(0)" class="btn btn-success" style="margin:2%;
-    height:45px; width:28%; margin-top:40px;">Start</button>
+    height:45px; width:40%; margin-top:40px;">Start</button>
 
     <button type="button" onclick="sendData(1)" class="btn btn-primary"style="margin:2%;
-    height:45px; width:28%; margin-top:40px;">Pause</button>
+    height:45px; width:40%; margin-top:40px;">Pause</button>
 
-    <button type="button" onclick="sendData(2)" class="btn btn-danger"style="margin:2%;
-    height:45px; width:28%; margin-top:40px;">Reset</button>
+    <!-- <button type="button" onclick="sendData(2)" class="btn btn-danger"style="margin:2%;
+    height:45px; width:28%; margin-top:40px;">Reset</button>-->
     
 </div>
 
