@@ -15,6 +15,10 @@
 
 ## Development progress
 
+* 20/11/2019
+    * PCB done, ready for soldering.
+    * Button code is ready, web as well.
+
 * 05/11/2019
     * Finished final 3D model of construction, ready to print it. 
 
