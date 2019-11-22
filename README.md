@@ -11,11 +11,14 @@
 
 * ***Sources.txt***          -> All of the sources I used.
 
-* ***hanusfi16.doc***        -> Research paper.
+* ***hanusfi16.doc***        -> Research document.
 
 
 
 ## Development progress
+
+* 22/11/2019
+    * Started working on the research document, which should I have done first, based on resources, which I have saved before working on the project.
 
 * 20/11/2019
     * PCB done, ready for soldering.
