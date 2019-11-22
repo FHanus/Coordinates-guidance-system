@@ -11,6 +11,8 @@
 
 * ***Sources.txt***          -> All of the sources I used.
 
+* ***hanusfi16.doc***        -> Research paper.
+
 
 
 ## Development progress
