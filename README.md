@@ -21,7 +21,7 @@
     * Started working on the research document, which should I have done first, based on resources, which had I saved links for before.
 
 * 20/11/2019
-    * PCB done, ready for soldering.
+    * PCB test done.
     * Button code is ready, web as well.
 
 * 05/11/2019
