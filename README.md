@@ -18,7 +18,7 @@
 ## Development progress
 
 * 22/11/2019
-    * Started working on the research document, which should I have done first, based on resources, which I had saved before.
+    * Started working on the research document, which should I have done first, based on resources, which had I saved links for before.
 
 * 20/11/2019
     * PCB done, ready for soldering.
