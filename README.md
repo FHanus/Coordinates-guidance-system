@@ -16,7 +16,7 @@ Used for cleaning clogged cooler pipes.
 
 ## Parts
 
-* ***Main.ino***    -> Split code to step and measure. More uncluttered. Includes main file.
+* ***Main***    -> Split code to step and measure. More uncluttered. Includes main file.
 
 * ***Inventor - DMP.zip***    -> 3D model.
 
