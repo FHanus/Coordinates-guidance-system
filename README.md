@@ -5,8 +5,6 @@
 
 * ***Main.ino***    -> Code to step and measure. Main file.
 
-* ***WEB - Main.ino + WEB -index.h***   -> WEB site with control code
-
 * ***Inventor - DMP.zip***    -> 3D model.
 
 * ***hanusfi16.doc***        -> Research document.
