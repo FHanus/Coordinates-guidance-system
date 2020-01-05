@@ -8,7 +8,7 @@ __Contact: filiphanus1@gmail.com__
 
 * Microcontroller: ESP32
 * Sensor to detect distance: vl53l0x (ToF)
-* Movement using nema16 and nema17 motors
+* Movement: NEMA16 and NEMA17 motors
 
 ## Parts
 
