@@ -20,7 +20,7 @@
     * Working functions in main code. Working PCB. 
 
 * 22/11/2019
-    * Started working on the research document, which should I have done first, based on resources, which had I saved links for before.
+    * Research document added.
 
 * 20/11/2019
     * PCB test done.
