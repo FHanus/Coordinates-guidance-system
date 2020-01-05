@@ -17,7 +17,10 @@
     * Main routes of the code done. Research document progress.
  
 * 22/12/2019
-    * Working functions in main code. Working PCB. 
+    * Working functions in main code.
+  
+* 14/12/2019
+    * Finished and soldered PCB.
 
 * 22/11/2019
     * Research document added.
