@@ -1,0 +1,39 @@
+#define koncak1 34 
+#define koncak2 35
+#define koncak3 32
+#define koncak4 33
+
+
+
+
+void setup() {
+Serial.begin(115200);
+pinMode(koncak1, INPUT);              
+pinMode(koncak2, INPUT);
+pinMode(koncak3, INPUT);
+pinMode(koncak4, INPUT);
+}
+
+void loop() {
+  
+  if (digitalRead(koncak1)) {
+    Serial.print("\n1");  
+  }
+   if (digitalRead(koncak2)) {
+    Serial.print("\n2");  
+  }
+   if (digitalRead(koncak3)) {
+    Serial.print("\n3");  
+  }
+   if (digitalRead(koncak4)) {
+    Serial.print("\n4");  
+  }
+
+
+
+
+
+
+
+  
+}
