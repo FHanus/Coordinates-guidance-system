@@ -4,6 +4,12 @@
 __Built as a long-term graduation project__     
 __Contact: filiphanus1@gmail.com__
 
+# Specs
+
+* Microcontroller: ESP32
+* Sensor to detect distance: vl53l0x (ToF)
+* Movement using nema16 and nema17 motors
+
 ## Parts
 
 * ***Main.ino***    -> Split code to step and measure. More uncluttered. Includes main file.
