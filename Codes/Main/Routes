@@ -1,0 +1,241 @@
+// Oběh po tom, co je vyhodnocen otvor
+void measureRoute(){  
+  // Fáze 0 - zde vyhodnocuje zda-li je, nebo není otvor
+  if (phase == 0){  
+    if(holeValue()==0){
+      return;
+    }
+     if(holeValue()==1){
+      phase = 1;
+    }
+  }
+  // Fáze 1 - zde vyhodnocuje zda-li byl nebo nebyl otvor měřen (počítá se i, jestli není hodnota mimo chladič, vyhodnotí jako že už byl měřen)
+  if (phase == 1){
+    //Xaxis1.currentPosition()
+    //Yaxis.currentPosition()
+  } 
+}
+// Základní oběh od načtení chladiče pro oběh nad ním
+void basicRoute(){
+  // 0 - Načtení nuly
+  if(poradnik == 0){
+    if(initializeLocation('Z') == 1){
+      initializeLocation('Z');
+    }
+
+    if(initializeLocation('Z') == 0){
+      phase2 = 0;
+      poradnik = 1;
+    }
+  }
+  // 1 - Nalezení kruhového chladiče
+  if(poradnik == 1){
+ 
+    if (phase2==0){
+      if(Yaxis1.currentPosition()!=1000){
+        motorStep('Y',1000,3500);
+      }
+      if(Yaxis1.currentPosition()==1000){
+        motorStop('Z');
+        phase2=1;
+      }
+    }
+    if (phase2==1){
+      if(holeValue()==0){
+        phase2 = 2;
+      }
+      if(holeValue()==1){
+        phase2 = 3;       
+      }
+    }
+    if (phase2==2){
+      if(Yaxis1.currentPosition()!=25000){
+        motorStep('Y',25000,3500);
+      }
+      if(Yaxis1.currentPosition()==25000){
+        motorStop('Y');
+        phase2=1;
+      }
+    }
+    if (phase2==3){
+      if(((Xaxis.currentPosition()%(100)) != 0)){
+        motorStep('X',Xaxis.currentPosition()+(100),900);
+      }
+      else if((Xaxis.currentPosition()%(100)) == 0){
+        motorStop('X');
+        if(holeValue()==1){
+          Serial.print("DURA - 1");        
+        }
+        else if(holeValue()==0){
+         merX[0] = Xaxis.currentPosition();
+         Serial.print("NIC - 0");  
+         phase2=4;  
+        }
+        motorStep('X',Xaxis.currentPosition()+(100),900);   
+      }
+         
+    }
+    if (phase2==4){
+      if(Xaxis.currentPosition()!=28900){
+        motorStep('X',28900,4500);
+      }
+      if(Xaxis.currentPosition()==28900){
+        motorStop('X');
+        phase2 = 5;
+      }      
+    }
+    if (phase2==5){
+     if(((Xaxis.currentPosition()%(100)) != 0)){
+        motorStep('X',Xaxis.currentPosition()-(100),900);
+      }
+      else if((Xaxis.currentPosition()%(100)) == 0){
+        motorStop('X');
+        if(holeValue()==1){ 
+         Serial.print("DURA - 1");           
+        }
+        else if(holeValue()==0){  
+         Serial.print("NIC - 0");       
+         merX[1] = Xaxis.currentPosition();
+         sChladic[0] = merX[0] + ((merX[1] - merX[0])/2);
+         Serial.println("\nSouradnice X otvoru:");
+         Serial.print(sChladic[0]);
+         Serial.println("\n");
+         phase2=6;  
+        }
+        motorStep('X',Xaxis.currentPosition()-(100),900);   
+      }    
+    }
+    if (phase2==6){
+      if(Yaxis1.currentPosition()!=0){
+        motorStep('Y',-1000,4500);
+      }
+      if(Yaxis1.currentPosition()==0){
+        motorStop('Y');
+        phase2=7;
+      }
+    }
+    if (phase2==7){
+      if(Xaxis.currentPosition()!=(2500)){
+        motorStep('X',2500,4500);
+      }
+      if(Xaxis.currentPosition()==(2500)){
+        motorStop('X');
+        phase2=8;
+      }
+    }
+    if (phase2==8){
+      if(holeValue()==0){
+        phase2 = 9;
+      }
+      if(holeValue()==1){
+        phase2 = 10;       
+      }
+    }
+    if (phase2==9){
+      if(Xaxis.currentPosition()!=26000){
+        motorStep('X',26000,4500);
+      }
+      if(Xaxis.currentPosition()==26000){
+        motorStop('X');
+        phase2=8;
+      }
+    }
+    if (phase2==10){
+      if(((Yaxis1.currentPosition()%(100)) != 0)){
+        motorStep('Y',Yaxis1.currentPosition()+(100),900);
+      }
+      else if((Yaxis1.currentPosition()%(100)) == 0){
+        motorStop('Y');
+        if(holeValue()==1){       
+        }
+        else if(holeValue()==0){
+         merY[0] = Yaxis1.currentPosition();
+         phase2=11;  
+        }
+        motorStep('Y',Yaxis1.currentPosition()+(100),900);   
+      }
+         
+    }
+    if (phase2==11){
+      if(Yaxis1.currentPosition()!=26100){
+        motorStep('Y',26100,4500);
+      }
+      if(Yaxis1.currentPosition()==26100){
+        motorStop('Y');
+        phase2 = 12;
+      }      
+    }
+    if (phase2==12){
+     if(((Yaxis1.currentPosition()%(100)) != 0)){
+        motorStep('Y',Yaxis1.currentPosition()-(100),900);
+      }
+      else if((Yaxis1.currentPosition()%(100)) == 0){
+        motorStop('Y');
+        if(holeValue()==1){        
+        }
+        else if(holeValue()==0){       
+         merY[1] = Yaxis1.currentPosition();
+         sChladic[1] = merY[0] + ((merY[1] - merY[0])/2);
+         Serial.println("\nSouradnice Y otvoru:");
+         Serial.print(sChladic[1]);
+         Serial.println("\n");
+         phase2=13;  
+        }
+        motorStep('Y',Yaxis1.currentPosition()-(100),900);   
+      }    
+    }
+    if (phase2==13){
+      if(Xaxis.currentPosition()!=(sChladic[0])){
+        motorStep('X',(sChladic[0]),4500);
+      }
+      if(Xaxis.currentPosition()==(sChladic[0])){
+        motorStop('X');
+        phase2=14;
+      }
+    }
+    if (phase2==14){
+      if(Yaxis1.currentPosition()!=(sChladic[1])){
+        motorStep('Y',(sChladic[1]),4500);
+      }
+      if(Yaxis1.currentPosition()==(sChladic[1])){
+        motorStop('Y');
+      }
+    }
+  } 
+  // 2 - Měřicí oběh nad chladičem
+  if(poradnik == 2){
+    if((digitalRead(koncak2)) && (smer == 1)){ 
+      motorStep('Y',Yaxis1.currentPosition()+(grid),2500);
+      if((Yaxis1.currentPosition()%(grid)) == 0){
+        motorStop('Y');
+        smer = 0;
+      }
+    }
+
+    if((digitalRead(koncak1)) && (smer == 0)){
+      motorStep('Y',Yaxis2.currentPosition()+(grid),2500);
+      if((Yaxis1.currentPosition()%(grid)) == 0){
+        motorStop('Y');
+        smer = 1;
+      }
+    } 
+
+    if((not digitalRead(koncak2)) && (smer == 1)){
+      motorStep('X',Xaxis.currentPosition()+(grid),3500);
+      if((Xaxis.currentPosition()%(grid)) == 0){
+        measureRoute();
+      }  
+    }
+
+    if((not digitalRead(koncak1)) && (smer == 0)){ 
+      motorStep('X',Xaxis.currentPosition()-(grid),-3500);
+       if((Xaxis.currentPosition()%(grid)) == 0){
+        measureRoute();
+      }
+    }
+
+    if((digitalRead(koncak4)) &&(digitalRead(koncak2))){
+      poradnik = 0;
+    }
+  }
+}
