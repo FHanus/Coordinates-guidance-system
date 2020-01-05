@@ -1,0 +1,42 @@
+#include "initOfVals.h"       // Zde inicializuji všechny proměnné.
+
+////   Setup funkce:  ////
+void setup() {
+  Serial.begin(115200);
+  tof.begin();
+  
+  // Nastavení motorů pro AccelStepper
+  Yaxis1.setPinsInverted(true,false,false);   // Pro upravení správného směru
+  Xaxis.setPinsInverted(true,false,false); 
+
+  Yaxis1.setMaxSpeed(5000);                   // Nastavení maximálních rychlostí
+  Yaxis2.setMaxSpeed(5000);
+  Xaxis.setMaxSpeed(7500);
+
+  Yaxis1.setSpeed(2500);                   // Nastavení rychlostí
+  Yaxis2.setSpeed(2500);
+  Xaxis.setSpeed(2500);
+
+  // Nastavení pinů koncových spínačů
+  pinMode(koncak1, INPUT);              
+  pinMode(koncak2, INPUT);
+  pinMode(koncak3, INPUT);
+  pinMode(koncak4, INPUT);
+
+  // Nastavení enable pinu pro blokování chodu motorů "enable" a jeho okamžité zapnutí pro blokaci náhodného chodu po startu.
+  pinMode(enableY, OUTPUT);
+  pinMode(enableX, OUTPUT);
+  digitalWrite(enableY, HIGH);
+  digitalWrite(enableX, HIGH);
+ 
+  // Po načtení ukončí setup a přejde do loopu.
+  Serial.print("\nSETUP FINISHED");
+}
+
+#include "basicFunctions.h"   // Zde inicializuji všechny vedlejší vytvořené funkce.
+#include "Routes.h"           // Zde inicializuji hlavní oběhovou funkci.
+
+////   Hlavní loop:   ////
+void loop() {
+ basicRoute();
+}
