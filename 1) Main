@@ -39,7 +39,7 @@ bool krokvar = 0;
 
 unsigned long previousMillis = 0;
 float dist;
-
+ 
 // Kombinační Proměnné
 int merX[2] = {0,0};
 int merY[2] = {0,0};
