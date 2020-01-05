@@ -1,0 +1,272 @@
+// Funkce pro vypnutí X motorů, Y motoru či všech zároveň
+void motorStop(char axis) {
+    // Y
+    if (axis == 'Y'){
+        Yaxis1.stop();
+        Yaxis2.stop();
+        Yaxis1.disableOutputs(); 
+        Yaxis2.disableOutputs();
+        digitalWrite(enableY, HIGH);
+    }
+
+    // X
+    if (axis == 'X'){
+        Xaxis.stop();
+        Xaxis.disableOutputs(); 
+        digitalWrite(enableX, HIGH);
+    }
+
+    // X i Y
+    if (axis == 'Z'){
+        Yaxis1.stop();
+        Yaxis2.stop();
+        Xaxis.stop();
+        Yaxis1.disableOutputs(); 
+        Yaxis2.disableOutputs();
+        Xaxis.disableOutputs(); 
+        digitalWrite(enableY, HIGH);
+        digitalWrite(enableX, HIGH);
+    }
+}
+// Funkce pro zapnutí X motorů, Y motoru či všech zároveň
+void motorStart(char axis) {
+    // Y
+    if (axis == 'Y'){
+        Yaxis1.enableOutputs(); 
+        Yaxis2.enableOutputs(); 
+        digitalWrite(enableY, LOW);
+    }
+
+    // X
+    if (axis == 'X'){
+        Xaxis.enableOutputs(); 
+        digitalWrite(enableX, LOW);
+    }
+
+    // BOTH X AND Y
+    if (axis == 'Z'){
+        Yaxis1.enableOutputs(); 
+        Yaxis2.enableOutputs(); 
+        Xaxis.enableOutputs(); 
+        digitalWrite(enableY, LOW);  
+        digitalWrite(enableX, LOW);        
+    }
+}
+// Funkce pro krokování
+void motorStep(char axis,long int position, long acceleration) {
+    if (axis == 'Y') {
+      if(Yaxis1.currentPosition() != position) {
+        if((Yaxis1.currentPosition() < position) && (not digitalRead(koncak4))){
+          motorStart('Y');
+          Yaxis1.moveTo(position);
+          Yaxis2.moveTo(position);
+
+          Yaxis1.setSpeed(acceleration);
+          Yaxis2.setSpeed(acceleration);
+        //Yaxis1.setAcceleration(acceleration);
+        //Yaxis2.setAcceleration(acceleration);
+
+          Yaxis1.run();
+          Yaxis2.run(); 
+        }
+        if((Yaxis1.currentPosition() > position) && (not digitalRead(koncak3))){
+          motorStart('Y');
+          Yaxis1.moveTo(position);
+          Yaxis2.moveTo(position);
+
+          Yaxis1.setSpeed(-1*(acceleration));
+          Yaxis2.setSpeed(-1*(acceleration));
+        //Yaxis1.setAcceleration(acceleration);
+        //Yaxis2.setAcceleration(acceleration);
+
+          Yaxis1.run();
+          Yaxis2.run(); 
+        }
+      }
+      else {
+        motorStop('Y');
+      }        
+    }
+    if (axis == 'X') {
+      if(Xaxis.currentPosition() != position) {
+        if((Xaxis.currentPosition() > position) && (not digitalRead(koncak1))){
+          motorStart('X');
+          Xaxis.moveTo(position);
+
+          Xaxis.setSpeed(-1*(acceleration));
+          //Xaxis.setAcceleration(acceleration);
+
+          Xaxis.run();
+        }
+        if((Xaxis.currentPosition() < position) && (not digitalRead(koncak2))){
+          motorStart('X');
+          Xaxis.moveTo(position);
+
+          Xaxis.setSpeed(acceleration);
+          //Xaxis.setAcceleration(acceleration);
+
+          Xaxis.run();
+        }
+      }
+      else {
+        motorStop('X');
+      }        
+    }
+}
+// Funkce pro najetí nulového bodu X, Y, XY
+bool initializeLocation(char axis){
+  if(runallowed == 1) {
+    // Y //
+    if (axis == 'Y'){
+      // Za jaké podmínky jdou X motory do záporu
+      if(not digitalRead(koncak3)) {
+        motorStep('Y',-100000,2500);
+      }
+      // Podmínka pro moment, kdy narazí na koncový spínač
+      else if (digitalRead(koncak3)) {
+        motorStop('Y');
+        Yaxis1.setCurrentPosition(0);
+        Yaxis2.setCurrentPosition(0);
+        return (0);
+      }  
+    }
+    // X
+    if (axis == 'X'){
+      // Za jaké podmínky jde Y motor do záporu
+      if(not digitalRead(koncak1)) {
+        motorStep('X',-100000,2500);
+      }
+      // Podmínka pro moment, kdy narazí na koncový spínač
+      if (digitalRead(koncak1)) {
+        motorStop('X');
+        Xaxis.setCurrentPosition(0);
+        return (1);
+      }        
+    }
+    // BOTH X AND Y
+    if (axis == 'Z'){
+      // Za jaké podmínky vyhodnotí hodnotu "1" jako splněno a tudíž automaticky opouští tuto funkci
+      if((digitalRead(koncak3) == 1) && (digitalRead(koncak1) == 1)) {
+        return (0);
+      }
+      // Za jaké podmínky jdou Y motory do záporu
+      if(not digitalRead(koncak3)) {
+        motorStep('Y',-100000,2500);
+      }
+      // Podmínka pro moment, kdy narazí na koncový spínač
+      if (digitalRead(koncak3)) {
+        motorStop('Y');
+        Yaxis1.setCurrentPosition(0);
+        Yaxis2.setCurrentPosition(0);
+        
+      }
+      // Za jaké podmínky jde X motor do záporu
+      if((not digitalRead(koncak1)) && (digitalRead(koncak3))) {
+        motorStep('X',-100000,2500);
+      }
+      // Podmínka pro moment, kdy narazí na koncový spínač
+      if (digitalRead(koncak1)) {
+        motorStop('X');
+        Xaxis.setCurrentPosition(0);
+      }       
+    }
+  }
+}
+// Funkce pro naměření a vypsání maximálního počtu kroků v dané ose
+int measureMax(char axis){
+  if(runallowed == 1) {
+    // Y //
+    if (axis == 'Y'){
+      // Za jaké podmínky jdou X motory do záporu
+      if(not digitalRead(koncak4)) {
+        motorStart('Y');
+        motorStep('Y',350000,1000);
+      }
+      // Podmínka pro moment, kdy narazí na koncový spínač
+      if (digitalRead(koncak4)) {
+        motorStop('Y');
+        return(0);
+      }      
+    }
+    // X //
+    if (axis == 'X'){
+      // Za jaké podmínky jde X motor do záporu
+      if(not digitalRead(koncak2)) {
+        motorStep('X',350000,3000);
+      }
+      // Podmínka pro moment, kdy narazí na koncový spínač
+      else if (digitalRead(koncak2)) {
+        motorStop('X');
+        return(0);
+      }        
+    }
+    // BOTH X AND Y //
+    if (axis == 'Z'){
+      // Za jaké podmínky vyhodnotí hodnotu "1" jako splněno a tudíž automaticky opouští tuto funkci
+      if((digitalRead(koncak4) == 1) && (digitalRead(koncak2) == 1)) {
+        return(0);
+      }
+      // Za jaké podmínky jdou Y motory do záporu
+      if(not(digitalRead(koncak4))) {
+        motorStep('Y',100000,1500);
+      }
+      // Podmínka pro moment, kdy narazí na koncový spínač
+      if (digitalRead(koncak4)) {
+        motorStop('Y');
+      }
+      // Za jaké podmínky jde X motor do záporu
+      if((not digitalRead(koncak2)) && (digitalRead(koncak4))) {
+        motorStep('X',100000,2000);
+      }
+      // Podmínka pro moment, kdy narazí na koncový spínač
+      if (digitalRead(koncak2)) {
+        motorStop('X');
+      }        
+    }
+  }
+}
+// Funkce pro načtení vzdálenosti
+float readDistanceTimeOfFlight(){
+  VL53L0X_RangingMeasurementData_t measure; 
+  tof.rangingTest(&measure, false);
+
+  //Serial.println(measure.RangeMilliMeter);
+  if (measure.RangeStatus != 4)
+    return measure.RangeMilliMeter;
+  else
+    return 0;  
+}
+// Funkce pro načtení 1/0 hodnoty o otvoru (0 == nic) (1 == otvor) 
+bool holeValue(){
+  if(millis() > previousMillis + 100){
+    previousMillis = millis();
+    float avg = 0;
+    int nMer = 0;
+    for(int i = 0; i < 10; i++)
+    {
+      float dist = readDistanceTimeOfFlight();
+      //only consider redings within the range
+      if(dist >= 9 && dist <= 150)
+      {
+        avg += dist;
+        nMer++;
+      }
+      else{
+        
+      }
+    }
+    //calculate the averege
+    dist = avg / max(1, nMer);
+    //Serial.println(dist);
+    
+    
+  }
+  if (dist>=35){return 1;}
+  if (dist<35){return 0;} 
+  if ((dist<5)or(dist>150)){Serial.println("ERROR!");}
+}
+
+
+      
+
+      
