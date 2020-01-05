@@ -1,7 +1,8 @@
 # Coordinates guidance system
 ***Author: Filip Hanus - Stredni prumyslova skola na Proseku***
 
-__Built as a long-term graduation project     Contact: filiphanus1@gmail.com__
+__Built as a long-term graduation project__     
+__Contact: filiphanus1@gmail.com__
 
 ## Parts
 
