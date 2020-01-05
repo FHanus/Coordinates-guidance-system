@@ -4,14 +4,14 @@
 __Built as a long-term graduation project__     
 __Contact: filiphanus1@gmail.com__
 
-# Specs
+## Specs
 Basically simplified 3D scanner.
 Working coordinates system, that detects holes and their coordinates.
 Used for cleaning clogged cooler pipes.
 
 * Microcontroller: ESP32
 * Sensor to detect distance: vl53l0x (ToF)
-* Movement: NEMA16 and NEMA17 motors
+* Movement: NEMA16 and NEMA17 motors with GT2 belt pulleys and belt
 
 ## Parts
 
