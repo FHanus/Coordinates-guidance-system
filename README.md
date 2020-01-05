@@ -3,7 +3,7 @@
 
 ## Parts
 
-* ***Main.ino***    -> Code to step and measure. Main file.
+* ***Main.ino***    -> Split code to step and measure. More uncluttered. Includes main file.
 
 * ***Inventor - DMP.zip***    -> 3D model.
 
