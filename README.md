@@ -3,19 +3,21 @@
 
 ## Parts
 
-* ***Main.ino + index.h***   -> WEB site with control code
+* ***Main.ino***    -> Code to step and measure. Main file.
 
-* ***Motor control.ino***    -> Code to step with two parallel motors in X direction. Will add Y direction later.
+* ***WEB - Main.ino + WEB -index.h***   -> WEB site with control code
 
 * ***Inventor - DMP.zip***    -> 3D model.
-
-* ***Sources.txt***          -> All of the sources I used.
 
 * ***hanusfi16.doc***        -> Research document.
 
 
-
 ## Development progress
+* 05/01/2020
+    * Main routes of the code done. Research document progress.
+ 
+* 22/12/2019
+    * Working functions in main code. Working PCB. 
 
 * 22/11/2019
     * Started working on the research document, which should I have done first, based on resources, which had I saved links for before.
