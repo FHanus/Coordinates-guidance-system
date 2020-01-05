@@ -12,6 +12,7 @@ Used for cleaning clogged cooler pipes.
 * Microcontroller: ESP32
 * Sensor to detect distance: vl53l0x (ToF)
 * Movement: NEMA16 and NEMA17 motors with GT2 belt pulleys and belt
+* Model: Aluminium frame with PLA parts
 
 ## Parts
 
