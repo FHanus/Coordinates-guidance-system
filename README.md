@@ -5,7 +5,7 @@ __Built as a long-term graduation project__
 __Contact: filiphanus1@gmail.com__
 
 ## Specs
-Basically simplified 3D scanner.
+Simplified 3D scanner.
 Working coordinates system, that detects holes and their coordinates.
 Used for cleaning clogged cooler pipes.
 
