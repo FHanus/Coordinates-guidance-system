@@ -8,14 +8,12 @@ void motorStop(char axis) {
         Yaxis2.disableOutputs();
         digitalWrite(enableY, HIGH);
     }
-
     // X
     if (axis == 'X'){
         Xaxis.stop();
         Xaxis.disableOutputs(); 
         digitalWrite(enableX, HIGH);
     }
-
     // X i Y
     if (axis == 'Z'){
         Yaxis1.stop();
@@ -36,13 +34,11 @@ void motorStart(char axis) {
         Yaxis2.enableOutputs(); 
         digitalWrite(enableY, LOW);
     }
-
     // X
     if (axis == 'X'){
         Xaxis.enableOutputs(); 
         digitalWrite(enableX, LOW);
     }
-
     // BOTH X AND Y
     if (axis == 'Z'){
         Yaxis1.enableOutputs(); 
@@ -145,7 +141,7 @@ bool initializeLocation(char axis){
     }
     // BOTH X AND Y
     if (axis == 'Z'){
-      // Za jaké podmínky vyhodnotí hodnotu "1" jako splněno a tudíž automaticky opouští tuto funkci
+      // Za jaké podmínky vyhodnotí jako splněno a tudíž automaticky opouští tuto funkci
       if((digitalRead(koncak3) == 1) && (digitalRead(koncak1) == 1)) {
         return (0);
       }
@@ -225,48 +221,3 @@ int measureMax(char axis){
     }
   }
 }
-// Funkce pro načtení vzdálenosti
-float readDistanceTimeOfFlight(){
-  VL53L0X_RangingMeasurementData_t measure; 
-  tof.rangingTest(&measure, false);
-
-  //Serial.println(measure.RangeMilliMeter);
-  if (measure.RangeStatus != 4)
-    return measure.RangeMilliMeter;
-  else
-    return 0;  
-}
-// Funkce pro načtení 1/0 hodnoty o otvoru (0 == nic) (1 == otvor) 
-bool holeValue(){
-  if(millis() > previousMillis + 100){
-    previousMillis = millis();
-    float avg = 0;
-    int nMer = 0;
-    for(int i = 0; i < 10; i++)
-    {
-      float dist = readDistanceTimeOfFlight();
-      //only consider redings within the range
-      if(dist >= 9 && dist <= 150)
-      {
-        avg += dist;
-        nMer++;
-      }
-      else{
-        
-      }
-    }
-    //calculate the averege
-    dist = avg / max(1, nMer);
-    //Serial.println(dist);
-    
-    
-  }
-  if (dist>=35){return 1;}
-  if (dist<35){return 0;} 
-  if ((dist<5)or(dist>150)){Serial.println("ERROR!");}
-}
-
-
-      
-
-      
