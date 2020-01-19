@@ -26,6 +26,9 @@ Used for cleaning clogged cooler pipes.
 
 
 ## Development progress
+* 19/01/2020
+    * Measure route done.
+ 
 * 05/01/2020
     * Main routes of the code done. Research document progress.
  
