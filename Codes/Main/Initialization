@@ -1,18 +1,14 @@
 #import <Arduino.h>           // Základní knihovna bez které programy nejdou programovat v MC Visual Studio Code. V arduino ide není třeba.
 #include <AccelStepper.h>     // Knihovna pro ovládání motorů, zkoušel jsem i bez, přidává ovšem více funkcí.
 
-#include <Wire.h>             // Knihovny ke komunikaci se senzorem ToF VL53L0X
-#include <Adafruit_VL53L0X.h>
-Adafruit_VL53L0X tof = Adafruit_VL53L0X();
-
 // Piny motorů
-AccelStepper Yaxis1(1, 19, 18);        //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  5  4
-AccelStepper Yaxis2(1, 5, 4);     //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  19 18
-AccelStepper Xaxis(1, 2, 15);       //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  2  15
+AccelStepper Yaxis1(1, 2, 15);         //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  5  4
+AccelStepper Yaxis2(1, 5, 4);           //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  19 18
+AccelStepper Xaxis(1, 19, 18);           //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  2  15
 
 // Enable piny k motorum
-#define enableY 23
-#define enableX 16
+#define enableY 16                      // Pin vypínající motor Y
+#define enableX 23                      // Pin vypínající motor X
 
 // Piny koncových spínačů
 #define koncak1 34 
@@ -20,47 +16,49 @@ AccelStepper Xaxis(1, 2, 15);       //1. místo = to, že jde o driver, 2. míst
 #define koncak3 32
 #define koncak4 33
 
+// Pin IRs
+#define senzor 21
+
 // Hodnoty čistě pro pozdější využití. Naměřené funkcí measureMax();
-long maxY = 26111;
+long maxY = 26111;                              
 long maxX = 28886;
 
 // Ochranná proměnná pro pozdější využití s tlačítky
 bool runallowed = true;
 
 // Jak jemně krokuje (1000=1cm)
-int grid = 500;
+int grid = 1800;
 
-// Sekvenční proměnné
+// Směr krokování
+int smerX = 1;
+
+// Offsety umožňující správné najíždění v případě nerovnoměrného senzoru (IR)
+int offsetX = 0; 
+int offsetY = -1100; 
+
+// Kombinační proměnné pro počítání středů
+int merX[2] = {0,0};                          
+int merY[2] = {0,0};
+int lastPos[2]={0,0};
+int lastPosWD[2]={0,0};
+bool measureGo = 0;
+int mathValX = 0;
+int mathValY = 0;
+
+// Proměnné středů
+int strdporadi = 1;
+int strd[17][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
+
+// Sekvenční proměnné pro měření
 int poradnik = 0;
 int phase = 0;
 int phase2 = 0;
-bool smer = 1;
-bool krokvar = 0;
+int phase3 = 0;
 
+// Proměnné časování
 unsigned long previousMillis = 0;
-float dist;
-
-// Kombinační Proměnné
-int merX[2] = {0,0};
-int merY[2] = {0,0};
+unsigned long previousMillisMain = 0;
 
 
-// Proměnné středů
-int sChladic[2] = {0,0};
-int s1[2] = {0,0};
-int s2[2] = {0,0};
-int s3[2] = {0,0};
-int s4[2] = {0,0};
-int s5[2] = {0,0};
-int s6[2] = {0,0};
-int s7[2] = {0,0};
-int s8[2] = {0,0};
-int s9[2] = {0,0};
-int s10[2] = {0,0};
-int s11[2] = {0,0};
-int s12[2] = {0,0};
-int s13[2] = {0,0};
-int s14[2] = {0,0};
-int s15[2] = {0,0};
-int s16[2] = {0,0};
-int s17[2] = {0,0};
+
+
