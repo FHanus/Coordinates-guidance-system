@@ -5,92 +5,66 @@
 #include <WebServer.h>
 
 // Údaje k AP
-const char* ssid = "hanusfi16";
-const char* password = "hanusfi";
-WebServer server(80);
+    const char* ssid = "hanusfi16";
+    const char* password = "dmp2020";
+    WebServer server(80);
 
 // Piny motorů
-AccelStepper Yaxis1(1, 2, 15);         //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  5  4
-AccelStepper Yaxis2(1, 5, 4);           //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  19 18
-AccelStepper Xaxis(1, 19, 18);           //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  2  15
+    AccelStepper Yaxis1(1, 2, 15);         //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  5  4
+    AccelStepper Yaxis2(1, 5, 4);           //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  19 18
+    AccelStepper Xaxis(1, 19, 18);           //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  2  15
 
 // Enable piny k motorum
-#define enableY 16                      // Pin vypínající motor Y
-#define enableX 23                      // Pin vypínající motor X
+    #define enableY 16                      // Pin vypínající motor Y
+    #define enableX 23                      // Pin vypínající motor X
 
 // Piny koncových spínačů
-#define koncak1 34 
-#define koncak2 35
-#define koncak3 32
-#define koncak4 33
+    #define koncak1 34 
+    #define koncak2 35
+    #define koncak3 32
+    #define koncak4 33
 
 // Pin IRs
-#define senzor 21
+    #define senzor 21
 
 // Hodnoty čistě pro pozdější využití. Naměřené funkcí measureMax();
-long maxY = 26111;                              
-long maxX = 28886;
+    long maxY = 26111;                              
+    long maxX = 28886;
 
 // Ochranná proměnná pro pozdější využití s tlačítky
-bool runallowed = false;
+    bool runallowed = false;
 
 // Jak jemně krokuje (1000=1cm)
-int grid = 1800;
+    int grid = 1800;
 
 // Směr krokování
-int smerX = 1;
+    int smerX = 1;
 
 // Offsety umožňující správné najíždění v případě nerovnoměrného senzoru (IR)
-int offsetX = 0; 
-int offsetY = -1100; 
+    int offsetX = 0; 
+    int offsetY = -1100; 
 
 // Kombinační proměnné pro počítání středů
-int merX[2] = {0,0};                          
-int merY[2] = {0,0};
-int lastPos[2]={0,0};
-int lastPosWD[2]={0,0};
-bool measureGo = 0;
-int mathValX = 0;
-int mathValY = 0;
+    int merX[2] = {0,0};                          
+    int merY[2] = {0,0};
+    int lastPos[2]={0,0};
+    int lastPosWD[2]={0,0};
+    bool measureGo = 0;
+    int mathValX = 0;
+    int mathValY = 0;
 
 // Proměnné středů
-int strdporadi = 1;
-int strd[17][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
+    int strdporadi = 1;
+    int strd[17][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
 
 // Sekvenční proměnné pro měření
-int poradnik = 0;
-int phase = 0;
-int phase2 = 0;
-int phase3 = 0;
+    int poradnik = 0;
+    int phase = 0;
+    int phase2 = 0;
+    int phase3 = 0;
 
 // Proměnné časování
-unsigned long previousMillis = 0;
-unsigned long previousMicrosMain = 0;
+    unsigned long previousMillis = 0;
+    unsigned long previousMicrosMain = 0;
 
 // Proměnné pro chod tlačítek
-const int buttonPinG = 27;     
-const int buttonPinB = 26; 
-const int buttonPinR = 25; 
-
-const int ledPinG = 13;     
-const int ledPinB = 12; 
-const int ledPinR = 14; 
-
-boolean valG = 0;
-boolean valB = 1;
-boolean valR = 1;
-
-boolean buttonStateG = 0;
-boolean buttonStateB = 1;
-boolean buttonStateR = 0;
-
-boolean lastButtonStateG = 0;
-boolean lastButtonStateB = 0;
-boolean lastButtonStateR = 0;
-
-int reset_count = 0;
-int unsigned long previousMillisTimer = 0;
-
-
-
-
