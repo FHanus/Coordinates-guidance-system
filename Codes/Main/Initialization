@@ -1,5 +1,13 @@
 #import <Arduino.h>           // Základní knihovna bez které programy nejdou programovat v MC Visual Studio Code. V arduino ide není třeba.
 #include <AccelStepper.h>     // Knihovna pro ovládání motorů, zkoušel jsem i bez, přidává ovšem více funkcí.
+#include <WiFi.h>             // Knihovny na web server
+#include <WiFiClient.h>
+#include <WebServer.h>
+
+// Údaje k AP
+const char* ssid = "hanusfi16";
+const char* password = "hanusfi";
+WebServer server(80);
 
 // Piny motorů
 AccelStepper Yaxis1(1, 2, 15);         //1. místo = to, že jde o driver, 2. místo = step pin , 3. místo = direction pin  5  4
@@ -24,7 +32,7 @@ long maxY = 26111;
 long maxX = 28886;
 
 // Ochranná proměnná pro pozdější využití s tlačítky
-bool runallowed = true;
+bool runallowed = false;
 
 // Jak jemně krokuje (1000=1cm)
 int grid = 1800;
@@ -57,7 +65,31 @@ int phase3 = 0;
 
 // Proměnné časování
 unsigned long previousMillis = 0;
-unsigned long previousMillisMain = 0;
+unsigned long previousMicrosMain = 0;
+
+// Proměnné pro chod tlačítek
+const int buttonPinG = 27;     
+const int buttonPinB = 26; 
+const int buttonPinR = 25; 
+
+const int ledPinG = 13;     
+const int ledPinB = 12; 
+const int ledPinR = 14; 
+
+boolean valG = 0;
+boolean valB = 1;
+boolean valR = 1;
+
+boolean buttonStateG = 0;
+boolean buttonStateB = 1;
+boolean buttonStateR = 0;
+
+boolean lastButtonStateG = 0;
+boolean lastButtonStateB = 0;
+boolean lastButtonStateR = 0;
+
+int reset_count = 0;
+int unsigned long previousMillisTimer = 0;
 
 
 
