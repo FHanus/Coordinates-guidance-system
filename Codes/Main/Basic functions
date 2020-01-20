@@ -290,3 +290,180 @@ void tlacitka(){
   }
   lastButtonStateR = buttonStateR; 
 }
+/*
+// Funkce pro ovládání tlačítek
+void tlacitka(){
+  // Zelené tlačítko
+  buttonStateG = digitalRead(buttonPinG);
+  if ( (buttonStateG == 1) && (lastButtonStateG == 0) ){
+    valG = 1;
+    valB = 0;
+    runallowed = true;
+  } 
+  digitalWrite(ledPinG, valG);
+  lastButtonStateG = buttonStateG;
+
+  // Modré tlačítko
+  buttonStateB = digitalRead(buttonPinB);
+  if ((buttonStateB == 1) && (lastButtonStateB == 0)){
+    valB = 1;
+    valG = 0;
+    runallowed = false;
+  } 
+  digitalWrite(ledPinB, valB);
+  lastButtonStateB = buttonStateB;
+
+  // Červené tlačítko
+  buttonStateR = digitalRead(buttonPinR);                                         
+  if (( buttonStateR == HIGH ) and (reset_count < 10) and (valB == 1)){
+    if(previousMillisTimer+150<=millis()){
+      valR = 1;
+      digitalWrite(ledPinR, valR);
+    }
+    if(previousMillisTimer+300<=millis()){
+      valR = 0;
+      digitalWrite(ledPinR, valR);
+      reset_count = reset_count + 1; 
+      previousMillisTimer = millis();
+    }
+  }
+  else{
+    valR = HIGH;
+    digitalWrite(ledPinR, valR);
+  }
+  if (( (lastButtonStateR == HIGH) and (buttonStateR == LOW) and (reset_count < 10)) or ( (valB != 1) ) ){
+    reset_count = 0;
+  }
+  if ( (lastButtonStateR == HIGH) and (buttonStateR == LOW) and (reset_count == 10) and (valB == 1)){
+    reset_count = 0;
+    poradnik = 0;
+    phase = 0;
+    phase2 = 0;
+    phase3 = 0;
+    merX[0] = 0;   
+    merX[1] = 0;               
+    merY[0] = 0;   
+    merY[1] = 0;   
+    lastPos[0] = 0;   
+    lastPos[1] = 0;   
+    lastPosWD[0] = 0;   
+    lastPosWD[1] = 0;   
+    measureGo = 0;
+    mathValX = 0;
+    mathValY = 0;
+    strdporadi = 1;
+    for(int i=0;i<17;i++){
+      for(int d=0;d<2;d++){
+        strd[i][d]= 0;   
+      }
+    }
+  }
+  lastButtonStateR = buttonStateR; 
+}
+*/
+/*
+void handleLED() {
+ String led0State = "OFF";
+ String led1State = "OFF";
+
+ // Odkazuje na xhttp.open("GET", "setLED?LEDstate="+led, true); v index.h
+ String t_state = server.arg("LEDstate"); 
+
+ if(t_state == "0"){
+    led0State = "ON";
+    led1State = "OFF";
+    valG = 1;
+    valB = 0;
+    runallowed = true;
+ }
+ if(t_state == "1"){
+    led0State = "OFF";
+    led1State = "ON";
+    valG = 0;
+    valB = 1; 
+    runallowed = false;  
+ }
+
+  // Zelené tlačítko
+  buttonStateG = digitalRead(buttonPinG);
+  if ((buttonStateG == 1) && (lastButtonStateG == 0) ){
+    valG = 1;
+    valB = 0;
+    runallowed = true;
+  } 
+  digitalWrite(ledPinG, valG);
+  lastButtonStateG = buttonStateG;
+
+  // Modré tlačítko
+  buttonStateB = digitalRead(buttonPinB);
+  if ((buttonStateB == 1) && (lastButtonStateB == 0)){
+    valG = 0;
+    valB = 1;
+    runallowed = false;
+  } 
+  digitalWrite(ledPinB, valB);
+  lastButtonStateB = buttonStateB;
+
+  // Červené tlačítko
+  buttonStateR = digitalRead(buttonPinR);                                         
+  if (( buttonStateR == HIGH ) and (reset_count < 10) and (valB == 1)){
+    if(previousMillisTimer+150<=millis()){
+      valR = 1;
+      digitalWrite(ledPinR, valR);
+    }
+    if(previousMillisTimer+300<=millis()){
+      valR = 0;
+      digitalWrite(ledPinR, valR);
+      reset_count = reset_count + 1; 
+      previousMillisTimer = millis();
+    }
+  }
+  else{
+    valR = HIGH;
+    digitalWrite(ledPinR, valR);
+  }
+  if (( (lastButtonStateR == HIGH) and (buttonStateR == LOW) and (reset_count < 10)) or ( (valB != 1) ) ){
+    reset_count = 0;
+  }
+  if ( (lastButtonStateR == HIGH) and (buttonStateR == LOW) and (reset_count == 10) and (valB == 1)){
+    reset_count = 0;
+    poradnik = 0;
+    phase = 0;
+    phase2 = 0;
+    phase3 = 0;
+    merX[0] = 0;   
+    merX[1] = 0;               
+    merY[0] = 0;   
+    merY[1] = 0;   
+    lastPos[0] = 0;   
+    lastPos[1] = 0;   
+    lastPosWD[0] = 0;   
+    lastPosWD[1] = 0;   
+    measureGo = 0;
+    mathValX = 0;
+    mathValY = 0;
+    strdporadi = 1;
+    for(int i=0;i<17;i++){
+      for(int d=0;d<2;d++){
+        strd[i][d]= 0;   
+      }
+    }
+  }
+  lastButtonStateR = buttonStateR; 
+
+ // Pošle webovou stránku serveru
+ server.send(200, "text/plane", led0State);
+ server.send(200, "text/plane", led1State);  
+}
+void handleRoot() {
+ String s = MAIN_page; 
+ // Pošle webovou stránku serveru
+ server.send(200, "text/html", s); 
+}
+void handleValues(){
+ basicRoute(); 
+ String strd[0][0] = String(strd[0][0]);
+ // Pošle hodnotu X na ajax požadavek
+ server.send(200, "text/plane", strd[0][0]);
+}
+*/
