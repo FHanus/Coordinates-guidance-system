@@ -1,18 +1,26 @@
 #include "initOfVals.h"       // Zde inicializuji všechny proměnné.
 #include "index.h"       // Zde inicializuji všechny proměnné.
 
+TaskHandle_t Task1;
+TaskHandle_t Task2;
 
 void handleRoot() {
  String s = MAIN_page; 
  // Pošle webovou stránku serveru
  server.send(200, "text/html", s); 
 }
-
-void handleValues(){
-  String X0 = String(strd[0][0]);
-  server.send(200, "text/plane", X0);
+void handlevaluesX() { 
+  for (var i=0; i<17; i++) {
+    let X=String(strd[i][0]); 
+    server.send(200, "text/plane", (i+1).toString() + "&" + X);  
+  }
 }
-
+void handlevaluesY() { 
+  for (var i=0; i<17; i++) {
+    let Y=String(strd[i][1]); 
+    server.send(200, "text/plane", (i+1).toString() + "&" + Y);  
+  }
+}
 void handleLED() {
  String led0State = "OFF";
  String led1State = "OFF";
@@ -59,10 +67,17 @@ void setup() {
   Serial.println(IP); 
   server.on("/", handleRoot);      
   server.on("/setLED", handleLED);
-  server.on("/readValues", handleValues);
+  server.on("/readValuesX", handleValuesX);
+  server.on("/readValuesY", handleValuesY);
  
   server.begin();                  
-  Serial.println("HTTP server started");      
+  Serial.println("HTTP server started");
+
+  //create a task that will be executed in the Task1code() function, with priority 1 and executed on core 0
+  xTaskCreatePinnedToCore(Task1code,"Task1",10000,NULL,1,&Task1,0);                 
+
+  //create a task that will be executed in the Task2code() function, with priority 1 and executed on core 1
+  xTaskCreatePinnedToCore(Task2code,"Task2",10000,NULL,1,&Task2,1);        
 
   // Nastavení motorů pro AccelStepper
   Yaxis2.setPinsInverted(true,false,false);   // Pro upravení správného směru
@@ -104,14 +119,22 @@ void setup() {
   // Po načtení ukončí setup a přejde do loopu.
   Serial.print("\nSETUP FINISHED\n");
 }
-  
 
 #include "basicFunctions.h"   // Zde inicializuji všechny vedlejší vytvořené funkce.
 #include "Routes.h"           // Zde inicializuji hlavní oběhovou funkci.
 
-
-////   Hlavní loop:   ////
+////   Hlavní loops:   ////
+void Task1code( void * pvParameters ){
+  for(;;){
+    server.handleClient(); 
+    delay(10);
+  }
+}
+void Task2code( void * pvParameters ){
+  for(;;){
+    basicRoute();
+    delay(10);
+  }
+}  
 void loop(){
- server.handleClient(); 
- basicRoute();
 }
