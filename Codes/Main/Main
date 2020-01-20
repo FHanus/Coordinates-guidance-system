@@ -1,12 +1,71 @@
 #include "initOfVals.h"       // Zde inicializuji všechny proměnné.
- 
+#include "index.h"       // Zde inicializuji všechny proměnné.
+
+
+void handleRoot() {
+ String s = MAIN_page; 
+ // Pošle webovou stránku serveru
+ server.send(200, "text/html", s); 
+}
+
+void handleValues(){
+  String X0 = String(strd[0][0]);
+  server.send(200, "text/plane", X0);
+}
+
+void handleLED() {
+ String led0State = "OFF";
+ String led1State = "OFF";
+
+ // Odkazuje na xhttp.open("GET", "setLED?LEDstate="+led, true); v index.h
+ String t_state = server.arg("LEDstate"); 
+ Serial.println(t_state);
+ if(t_state == "0"){
+    led0State = "ON";
+    led1State = "OFF";
+    valG = 1;
+    valB = 0;
+    digitalWrite(ledPinG, valG);
+    digitalWrite(ledPinB, valB);
+    runallowed = true;
+ }
+ if(t_state == "1"){
+    led0State = "OFF";
+    led1State = "ON";
+    valG = 0;
+    valB = 1; 
+    digitalWrite(ledPinG, valG);
+    digitalWrite(ledPinB, valB);
+    runallowed = false;  
+ }
+
+ // Pošle webovou stránku serveru
+ server.send(200, "text/plane", led0State);
+ server.send(200, "text/plane", led1State);  
+}
+
 ////   Setup funkce:  ////
 void setup() {
   Serial.begin(115200);
-  tof.begin();
-  
+
+  // Server
+  WiFi.mode(WIFI_AP); 
+  WiFi.softAP(ssid, password);
+
+  Serial.println("Connecting to ");
+  Serial.print(ssid);    
+  IPAddress IP = WiFi.softAPIP();
+  Serial.print("AP IP address: ");
+  Serial.println(IP); 
+  server.on("/", handleRoot);      
+  server.on("/setLED", handleLED);
+  server.on("/readValues", handleValues);
+ 
+  server.begin();                  
+  Serial.println("HTTP server started");      
+
   // Nastavení motorů pro AccelStepper
-  Yaxis1.setPinsInverted(true,false,false);   // Pro upravení správného směru
+  Yaxis2.setPinsInverted(true,false,false);   // Pro upravení správného směru
   Xaxis.setPinsInverted(true,false,false); 
 
   Yaxis1.setMaxSpeed(5000);                   // Nastavení maximálních rychlostí
@@ -23,20 +82,36 @@ void setup() {
   pinMode(koncak3, INPUT);
   pinMode(koncak4, INPUT);
 
+  // Piny pro tlacitka
+  pinMode(buttonPinR, INPUT);
+  pinMode(buttonPinG, INPUT);
+  pinMode(buttonPinB, INPUT);
+
+  pinMode(ledPinR, OUTPUT);
+  pinMode(ledPinG, OUTPUT);
+  pinMode(ledPinB, OUTPUT);
+
+  // Nastavení pinu senzoru IR
+  pinMode(senzor, INPUT);
+
   // Nastavení enable pinu pro blokování chodu motorů "enable" a jeho okamžité zapnutí pro blokaci náhodného chodu po startu.
   pinMode(enableY, OUTPUT);
   pinMode(enableX, OUTPUT);
   digitalWrite(enableY, HIGH);
   digitalWrite(enableX, HIGH);
- 
+
+
   // Po načtení ukončí setup a přejde do loopu.
-  Serial.print("\nSETUP FINISHED");
+  Serial.print("\nSETUP FINISHED\n");
 }
+  
 
 #include "basicFunctions.h"   // Zde inicializuji všechny vedlejší vytvořené funkce.
 #include "Routes.h"           // Zde inicializuji hlavní oběhovou funkci.
 
+
 ////   Hlavní loop:   ////
-void loop() {
+void loop(){
+ server.handleClient(); 
  basicRoute();
 }
