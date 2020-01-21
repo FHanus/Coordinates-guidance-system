@@ -76,23 +76,26 @@ const char MAIN_page[] PROGMEM = R"=====(
   setInterval(function(){ getData();},2000); 
   function getData() {
 
-    var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("X0").innerHTML = this.responseText;
-          }
-        };
-    xhttp.open("GET", "readValues", true);
-    xhttp.send();
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("Y0").innerHTML = this.responseText;
-      }
-    };
-    xhttp.open("GET", "readValues", true);
-    xhttp.send();
+       var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+           if (this.readyState == 4 && this.status == 200) {
+             let i=this.responseText.split("&")[0];
+             document.getElementById("X" + i).innerHTML = this.responseText.replace(i+"&","");
+           }
+         };
+       xhttp.open("GET", "readValues", true);
+       xhttp.send();
+       
+   
+       var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+           if (this.readyState == 4 && this.status == 200) {
+             let y=this.responseText.split("&")[1];
+             document.getElementById("Y" + i).innerHTML = this.responseText.replace(y+"&","");
+           }
+         };
+       xhttp.open("GET", "readValues", true);
+       xhttp.send();
 
   }
   
