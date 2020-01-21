@@ -16,9 +16,9 @@ void handlevaluesX() {
   }
 }
 void handlevaluesY() { 
-  for (var i=0; i<17; i++) {
-    let Y=String(strd[i][1]); 
-    server.send(200, "text/plane", (i+1).toString() + "&" + Y);  
+  for (var y=0; y<17; y++) {
+    let Y=String(strd[y][1]); 
+    server.send(200, "text/plane", (y+1).toString() + "&" + Y);  
   }
 }
 void handleLED() {
