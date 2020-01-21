@@ -83,7 +83,7 @@ const char MAIN_page[] PROGMEM = R"=====(
              document.getElementById("X" + i).innerHTML = this.responseText.replace(i+"&","");
            }
          };
-       xhttp.open("GET", "readValues", true);
+       xhttp.open("GET", "readValuesX", true);
        xhttp.send();
        
    
@@ -94,7 +94,7 @@ const char MAIN_page[] PROGMEM = R"=====(
              document.getElementById("Y" + i).innerHTML = this.responseText.replace(y+"&","");
            }
          };
-       xhttp.open("GET", "readValues", true);
+       xhttp.open("GET", "readValuesY", true);
        xhttp.send();
 
   }
