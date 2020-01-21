@@ -11,14 +11,18 @@ void handleRoot() {
 }
 void handlevaluesX() { 
   for (var i=0; i<17; i++) {
-    let X=String(strd[i][0]); 
-    server.send(200, "text/plane", (i+1).toString() + "&" + X);  
+    if(strd[i][0]!=0){
+      let X=String(strd[i][0]); 
+      server.send(200, "text/plane", (i+1).toString() + "&" + X);   
+    }
   }
 }
 void handlevaluesY() { 
-  for (var y=0; y<17; y++) {
-    let Y=String(strd[y][1]); 
-    server.send(200, "text/plane", (y+1).toString() + "&" + Y);  
+  for (var y=0; y<17; y++){
+    if(strd[y][1]!=0){
+      let Y=String(strd[y][1]); 
+      server.send(200, "text/plane", (y+1).toString() + "&" + Y);     
+    } 
   }
 }
 void handleLED() {
