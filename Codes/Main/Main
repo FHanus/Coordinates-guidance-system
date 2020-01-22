@@ -2,29 +2,64 @@
 #include "index.h"       // Zde inicializuji všechny proměnné.
 
 TaskHandle_t Task1;
-TaskHandle_t Task2;
 
 void handleRoot() {
  String s = MAIN_page; 
  // Pošle webovou stránku serveru
  server.send(200, "text/html", s); 
 }
-void handlevaluesX() { 
-  for (var i=0; i<17; i++) {
-    if(strd[i][0]!=0){
-      let X=String(strd[i][0]); 
-      server.send(200, "text/plane", (i+1).toString() + "&" + X);   
-    }
+
+void handlevalues() {
+  if(strdporadi==1){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]));   
   }
-}
-void handlevaluesY() { 
-  for (var y=0; y<17; y++){
-    if(strd[y][1]!=0){
-      let Y=String(strd[y][1]); 
-      server.send(200, "text/plane", (y+1).toString() + "&" + Y);     
-    } 
+  if(strdporadi==2){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]));     
   }
+  if(strdporadi==3){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]));     
+  }
+  if(strdporadi==4){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]));       
+  }
+  if(strdporadi==5){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]));       
+  }
+  if(strdporadi==6){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]));      
+  }
+  if(strdporadi==7){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]));     
+  }
+  if(strdporadi==8){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]) + "," + String(strd[8][0]) + "," + String(strd[8][1]));       
+  }
+  if(strdporadi==9){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]) + "," + String(strd[8][0]) + "," + String(strd[8][1]) + "," + String(strd[9][0]) + "," + String(strd[9][1]));   
+  }
+  if(strdporadi==10){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]) + "," + String(strd[8][0]) + "," + String(strd[8][1]) + "," + String(strd[9][0]) + "," + String(strd[9][1]) + "," + String(strd[10][0]) + "," + String(strd[10][1]));        
+  }
+  if(strdporadi==11){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]) + "," + String(strd[8][0]) + "," + String(strd[8][1]) + "," + String(strd[9][0]) + "," + String(strd[9][1]) + "," + String(strd[10][0]) + "," + String(strd[10][1]) + "," + String(strd[11][0]) + "," + String(strd[11][1]));      
+  }
+  if(strdporadi==12){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]) + "," + String(strd[8][0]) + "," + String(strd[8][1]) + "," + String(strd[9][0]) + "," + String(strd[9][1]) + "," + String(strd[10][0]) + "," + String(strd[10][1]) + "," + String(strd[11][0]) + "," + String(strd[11][1]) + "," + String(strd[12][0]) + "," + String(strd[12][1]));      
+  }
+  if(strdporadi==13){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]) + "," + String(strd[8][0]) + "," + String(strd[8][1]) + "," + String(strd[9][0]) + "," + String(strd[9][1]) + "," + String(strd[10][0]) + "," + String(strd[10][1]) + "," + String(strd[11][0]) + "," + String(strd[11][1]) + "," + String(strd[12][0]) + "," + String(strd[12][1]) + "," + String(strd[13][0]) + "," + String(strd[13][1]));    
+  }
+  if(strdporadi==14){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]) + "," + String(strd[8][0]) + "," + String(strd[8][1]) + "," + String(strd[9][0]) + "," + String(strd[9][1]) + "," + String(strd[10][0]) + "," + String(strd[10][1]) + "," + String(strd[11][0]) + "," + String(strd[11][1]) + "," + String(strd[12][0]) + "," + String(strd[12][1]) + "," + String(strd[13][0]) + "," + String(strd[13][1]) + "," + String(strd[14][0]) + "," + String(strd[14][1]));    
+  }
+  if(strdporadi==15){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]) + "," + String(strd[8][0]) + "," + String(strd[8][1]) + "," + String(strd[9][0]) + "," + String(strd[9][1]) + "," + String(strd[10][0]) + "," + String(strd[10][1]) + "," + String(strd[11][0]) + "," + String(strd[11][1]) + "," + String(strd[12][0]) + "," + String(strd[12][1]) + "," + String(strd[13][0]) + "," + String(strd[13][1]) + "," + String(strd[14][0]) + "," + String(strd[14][1]) + "," + String(strd[15][0]) + "," + String(strd[15][1]));
+  }
+  if(strdporadi==16){
+    server.send(200, "text/plane", String(strd[0][0]) + "," + String(strd[0][1]) + "," + String(strd[1][0]) + "," + String(strd[1][1]) + "," + String(strd[2][0]) + "," + String(strd[2][1]) + "," + String(strd[3][0]) + "," + String(strd[3][1]) + "," + String(strd[4][0]) + "," + String(strd[4][1]) + "," + String(strd[5][0]) + "," + String(strd[5][1]) + "," + String(strd[6][0]) + "," + String(strd[6][1]) + "," + String(strd[7][0]) + "," + String(strd[7][1]) + "," + String(strd[8][0]) + "," + String(strd[8][1]) + "," + String(strd[9][0]) + "," + String(strd[9][1]) + "," + String(strd[10][0]) + "," + String(strd[10][1]) + "," + String(strd[11][0]) + "," + String(strd[11][1]) + "," + String(strd[12][0]) + "," + String(strd[12][1]) + "," + String(strd[13][0]) + "," + String(strd[13][1]) + "," + String(strd[14][0]) + "," + String(strd[14][1]) + "," + String(strd[15][0]) + "," + String(strd[15][1]) + "," + String(strd[16][0]) + "," + String(strd[16][1]));
+  } 
 }
+
 void handleLED() {
  String led0State = "OFF";
  String led1State = "OFF";
@@ -64,24 +99,20 @@ void setup() {
   WiFi.mode(WIFI_AP); 
   WiFi.softAP(ssid, password);
 
-  Serial.println("Connecting to ");
-  Serial.print(ssid);    
+  Serial.print("Connecting to ");
+  Serial.println(ssid);    
   IPAddress IP = WiFi.softAPIP();
   Serial.print("AP IP address: ");
   Serial.println(IP); 
   server.on("/", handleRoot);      
   server.on("/setLED", handleLED);
-  server.on("/readValuesX", handleValuesX);
-  server.on("/readValuesY", handleValuesY);
+  server.on("/readValues", handlevalues);
  
   server.begin();                  
   Serial.println("HTTP server started");
 
   //create a task that will be executed in the Task1code() function, with priority 1 and executed on core 0
-  xTaskCreatePinnedToCore(Task1code,"Task1",10000,NULL,1,&Task1,0);                 
-
-  //create a task that will be executed in the Task2code() function, with priority 1 and executed on core 1
-  xTaskCreatePinnedToCore(Task2code,"Task2",10000,NULL,1,&Task2,1);        
+  xTaskCreatePinnedToCore(Task1code,"Task1",10000,NULL,1,&Task1,0);                       
 
   // Nastavení motorů pro AccelStepper
   Yaxis2.setPinsInverted(true,false,false);   // Pro upravení správného směru
@@ -134,11 +165,6 @@ void Task1code( void * pvParameters ){
     delay(10);
   }
 }
-void Task2code( void * pvParameters ){
-  for(;;){
-    basicRoute();
-    delay(10);
-  }
-}  
 void loop(){
+  basicRoute();
 }
