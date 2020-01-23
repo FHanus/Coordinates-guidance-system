@@ -15,7 +15,6 @@ const char MAIN_page[] PROGMEM = R"=====(
     </style>
     
   </head>
-
 <!-- ======================== Tlačítka ======================== -->
   <div id="demo" align="center">
       <button type="button" onclick="sendData(0)" class="btn btn-success" style="margin:2%;
@@ -24,12 +23,10 @@ const char MAIN_page[] PROGMEM = R"=====(
       height:45px; width:40%; margin-top:40px;">Pause</button>
       <!-- <button type="button" onclick="sendData(2)" class="btn btn-danger"style="margin:2%;
       height:45px; width:28%; margin-top:40px;">Reset</button>-->
-      
   </div>
-
 <!-- ======================== Tabulka ======================== -->
   <body>
-    <table style="margin-top:20px; width:92.8%; margin-left:3.6%; ">
+    <table id="tblData" style="margin-top:20px; width:92.8%; margin-left:3.6%; ">
     
       <tr>
         <th style="height:45px; width:30%">Name</th>
@@ -48,7 +45,6 @@ const char MAIN_page[] PROGMEM = R"=====(
         <td style="height:45px; width:25%"><span id="X1">N/A</span></td>
         <td style="height:45px; width:25%"><span id="Y1">N/A</span></td>
       </tr>
-
       <tr>
         <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 3</td>
         <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X2">N/A</span></td>
@@ -138,14 +134,47 @@ const char MAIN_page[] PROGMEM = R"=====(
         <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X16">N/A</span></td>
         <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y16">N/A</span></td>
       </tr>
-
     </table>
   </body>
+  
+   <div align="center">
+      <button style="margin:2%; height:35px; width:90%; margin-top:40px;" onclick="exportTableToExcel('tblData')">Export Table Data To Excel File</button>
+   </div>
 <!-- ======================== Část s kódem ======================== -->
   <script>
+  <!-- ===== Funkce Stahování tabulky ===== -->    
+    function exportTableToExcel(tblData, filename = 'Souradnice stredu'){
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'excel_data.xls';
+    
+    // Create download link element
+    downloadLink = document.createElement("a");
+    
+    document.body.appendChild(downloadLink);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTML], {
+            type: dataType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    
+        // Setting the file name
+        downloadLink.download = filename;
+        
+        //triggering the function
+        downloadLink.click();
+    }
+}
   <!-- ===== Funkce tlačítek ===== -->
-    function sendData(led) 
-    {
+    function sendData(led){
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() 
       {
@@ -158,7 +187,6 @@ const char MAIN_page[] PROGMEM = R"=====(
       xhttp.open("GET", "setLED?LEDstate="+led, true);
       xhttp.send();
     }  
-    
   <!-- ===== Funkce načítání hodnot do tabulky ===== -->
     setInterval(function(){ getData();},2000); 
     function getData() {
