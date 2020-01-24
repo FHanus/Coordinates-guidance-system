@@ -143,7 +143,7 @@ const char MAIN_page[] PROGMEM = R"=====(
 <!-- ======================== Část s kódem ======================== -->
   <script>
   <!-- ===== Funkce Stahování tabulky ===== -->    
-    function exportTableToExcel(tblData, filename = 'Souradnice stredu'){
+    function exportTableToExcel(tableID, filename = 'Souradnice stredu'){
     var downloadLink;
     var dataType = 'application/vnd.ms-excel';
     var tableSelect = document.getElementById(tableID);
