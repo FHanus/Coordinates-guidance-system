@@ -18,7 +18,7 @@ void handlevalues() {
       }
       else{
         message = (message + "," + "N/A");
-        server.send(200, "text/plane", message);
+        //server.send(200, "text/plane", message);
       } 
     }
   }
