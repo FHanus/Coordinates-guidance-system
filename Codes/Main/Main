@@ -10,18 +10,19 @@ void handleRoot() {
 }
 
 void handlevalues() {
+  message = (String(strd[0][0]) + "," + String(strd[0][1])); 
   for(int i=1; i<17;i++){
     for(int d=0; d<2;d++){
       if((strd[i][d])!=0){
-        message = (message + "," + String(strd[i][d]));
-        server.send(200, "text/plane", message);
+        mest = String(strd[i][d]);         
       }
       else{
-        message = (message + "," + "N/A");
-        //server.send(200, "text/plane", message);
+        mest = ("N/A"); 
       } 
+      message = (message + "," + mest); 
     }
   }
+  server.send(200, "text/plane", message); 
 }
 
 void handleLED() {
@@ -30,14 +31,15 @@ void handleLED() {
 
  // Odkazuje na xhttp.open("GET", "setLED?LEDstate="+led, true); v index.h
  String t_state = server.arg("LEDstate"); 
- Serial.println(t_state);
  if(t_state == "0"){
     led0State = "ON";
     led1State = "OFF";
     valG = 1;
     valB = 0;
     digitalWrite(ledPinG, valG);
-    digitalWrite(ledPinB, valB);
+    digitalWrite(ledPinB, valB);   
+    poradnikMan=1;
+    runM=0;
     runallowed = true;
  }
  if(t_state == "1"){
@@ -45,6 +47,25 @@ void handleLED() {
     led1State = "ON";
     valG = 0;
     valB = 1; 
+
+    poradnik = 0;
+    merX[0] = 0;   
+    merX[1] = 0;               
+    merY[0] = 0;   
+    merY[1] = 0;   
+    lastPos[0] = 0;   
+    lastPos[1] = 0;   
+    lastPosWD[0] = 0;   
+    lastPosWD[1] = 0;   
+    mathValX = 0;
+    mathValY = 0;
+
+    oldPos[0]=Xaxis.currentPosition();
+    oldPos[1]=Yaxis1.currentPosition();
+
+
+    runM=0;
+    poradnikMan=1;
     digitalWrite(ledPinG, valG);
     digitalWrite(ledPinB, valB);
     runallowed = false;  
@@ -54,6 +75,21 @@ void handleLED() {
  server.send(200, "text/plane", led0State);
  server.send(200, "text/plane", led1State);  
 }
+
+void handleForm() { 
+ //oldDesiredPos = desiredPos;
+ desiredPos = server.arg("position"); 
+
+ //if(desiredPos!=oldDesiredPos){
+  runM = 1;
+ //}
+
+ //String s = MAIN_page;
+ //server.send(200, "text/html", s); //Send web page
+ server.sendHeader("Location", "/");
+ server.send(302, "text/plain", "Updated-- Press Back Button"); 	
+}
+
 
 ////   Setup funkce:  ////
 void setup() {
@@ -71,7 +107,8 @@ void setup() {
   server.on("/", handleRoot);      
   server.on("/setLED", handleLED);
   server.on("/readValues", handlevalues);
- 
+  //server.on("/action_page", handleForm);
+  server.on("/form", handleForm);
   server.begin();                  
   Serial.println("HTTP server started");
 
@@ -126,7 +163,7 @@ void setup() {
 void Task1code( void * pvParameters ){
   for(;;){
     server.handleClient(); 
-    Serial.println("1");
+    
     delay(10);
   }
 }
