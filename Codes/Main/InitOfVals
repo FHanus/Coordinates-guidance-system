@@ -1,8 +1,9 @@
-#import <Arduino.h>           // Základní knihovna bez které programy nejdou programovat v MC Visual Studio Code. V arduino ide není třeba.
-#include <AccelStepper.h>     // Knihovna pro ovládání motorů, zkoušel jsem i bez, přidává ovšem více funkcí.
-#include <WiFi.h>             // Knihovny na web server
-#include <WiFiClient.h>
-#include <WebServer.h>
+// Import knihoven
+    #import <Arduino.h>           // Základní knihovna bez které programy nejdou programovat v MC Visual Studio Code. V arduino ide není třeba.
+    #include <AccelStepper.h>     // Knihovna pro ovládání motorů, zkoušel jsem i bez, přidává ovšem více funkcí.
+    #include <WiFi.h>             // Knihovny na web server
+    #include <WiFiClient.h>
+    #include <WebServer.h>
 
 // Údaje k AP
     const char* ssid = "hanusfi16";
@@ -35,7 +36,7 @@
     bool runallowed = false;
 
 // Jak jemně krokuje (1000=1cm)
-    int grid = 1800;
+    int grid = 3100;
 
 // Směr krokování
     int smerX = 1;
@@ -49,16 +50,18 @@
     int merY[2] = {0,0};
     int lastPos[2]={0,0};
     int lastPosWD[2]={0,0};
-    bool measureGo = 0;
+    int lastPosStr = 0;
+
     int mathValX = 0;
     int mathValY = 0;
 
 // Proměnné středů
     int strdporadi = 1;
-    //int strd[17][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
-    int strd[17][2] = {{100,100},{101,102},{103,4},{5,6},{7,8},{0,0},{11,12},{0,14},{15,16},{17,0},{19,20},{21,22},{23,24},{25,26},{27,28},{29,30},{31,32}};
+    int strd[17][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
+    //int strd[17][2] = {{100,100},{101,102},{103,4},{5,6},{7,8},{1,1},{11,12},{1,14},{15,16},{17,10},{19,20},{21,22},{23,24},{25,26},{27,28},{29,30},{31,32}};
     String message = (String(strd[0][0]) + "," + String(strd[0][1]));
-
+    String mest;
+    
 // Sekvenční proměnné pro měření
     int poradnik = 0;
     int phase = 0;
@@ -70,3 +73,27 @@
     unsigned long previousMicrosMain = 0;
 
 // Proměnné pro chod tlačítek
+    const int buttonPinG = 27;     
+    const int buttonPinB = 26; 
+    const int buttonPinR = 25; 
+
+    const int ledPinG = 13;     
+    const int ledPinB = 12; 
+    const int ledPinR = 14; 
+
+    boolean valG = 0;
+    boolean valB = 1;
+    boolean valR = 1;
+
+    boolean buttonStateG = 0;
+    boolean buttonStateB = 1;
+    boolean buttonStateR = 0;
+
+    boolean lastButtonStateG = 0;
+    boolean lastButtonStateB = 0;
+    boolean lastButtonStateR = 0;
+
+    int reset_count = 0;
+    int unsigned long previousMillisTimer = 0;
+
+// Proměnné pro chod manuálu
