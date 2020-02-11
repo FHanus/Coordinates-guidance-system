@@ -11,8 +11,10 @@ const char MAIN_page[] PROGMEM = R"=====(
     <link rel="stylesheet"href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<!-- ======================== Nastavení tabulky ======================== -->   
-   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- ======================== Nastavení tabulky ======================== -->    
     <style>
       tab-table, th, td {border: 1px solid black; border-collapse:collapse; text-align: center;}
     </style>
@@ -46,111 +48,88 @@ const char MAIN_page[] PROGMEM = R"=====(
       <!-- ======================== Tabulka ======================== -->
         <table style="margin-top:20px; width:92.8%; margin-left:3.6%; ">
           <tr>
-            <th style="height:45px; width:30%">Číslo</th>
-            <th style="height:45px; width:25%">X souřadnice</th>
-            <th style="height:45px; width:25%">Y souřadnice</th>
+            <th style="height:45px; width:30%">Cislo stredu</th>
+            <th style="height:45px; width:25%">X souradnice</th>
+            <th style="height:45px; width:25%">Y souradnice</th>
           </tr>
           
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 1</td>
+            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 0</td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X0">N/A</span></td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y0">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Location 2</td>
+            <td style="height:45px; width:30%">Stred 1</td>
             <td style="height:45px; width:25%"><span id="X1">N/A</span></td>
             <td style="height:45px; width:25%"><span id="Y1">N/A</span></td>
           </tr>
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 3</td>
+            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 2</td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X2">N/A</span></td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y2">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Location 4</td>
+            <td style="height:45px; width:30%">Stred 3</td>
             <td style="height:45px; width:25%"><span id="X3">N/A</span></td>
             <td style="height:45px; width:25%"><span id="Y3">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 5</td>
+            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 4</td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X4">N/A</span></td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y4">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Location 6</td>
+            <td style="height:45px; width:30%">Stred 5</td>
             <td style="height:45px; width:25%"><span id="X5">N/A</span></td>
             <td style="height:45px; width:25%"><span id="Y5">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 7</td>
+            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 6</td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X6">N/A</span></td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y6">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Location 8</td>
+            <td style="height:45px; width:30%">Stred 7</td>
             <td style="height:45px; width:25%"><span id="X7">N/A</span></td>
             <td style="height:45px; width:25%"><span id="Y7">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 9</td>
+            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 8</td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X8">N/A</span></td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y8">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Location 10</td>
+            <td style="height:45px; width:30%">Stred 9</td>
             <td style="height:45px; width:25%"><span id="X9">N/A</span></td>
             <td style="height:45px; width:25%"><span id="Y9">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 11</td>
+            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 10</td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X10">N/A</span></td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y10">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Location 12</td>
+            <td style="height:45px; width:30%">Stred 11</td>
             <td style="height:45px; width:25%"><span id="X11">N/A</span></td>
             <td style="height:45px; width:25%"><span id="Y11">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 13</td>
+            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 12</td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X12">N/A</span></td>
             <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y12">N/A</span></td>
           </tr>
           
-          <tr>
-            <td style="height:45px; width:30%">Location 14</td>
-            <td style="height:45px; width:25%"><span id="X13">N/A</span></td>
-            <td style="height:45px; width:25%"><span id="Y13">N/A</span></td>
-          </tr>
-                
-          <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 15</td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X14">N/A</span></td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y14">N/A</span></td>
-          </tr>
-                
-          <tr>
-            <td style="height:45px; width:30%">Location 16</td>
-            <td style="height:45px; width:25%"><span id="X15">N/A</span></td>
-            <td style="height:45px; width:25%"><span id="Y15">N/A</span></td>
-          </tr>
-          
-          <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Location 17</td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X16">N/A</span></td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y16">N/A</span></td>
-          </tr>
         </table>
       <!-- ======================== Tlačítko download ======================== -->
         <div id="buttonD" align="center">
@@ -293,13 +272,14 @@ const char MAIN_page[] PROGMEM = R"=====(
       <div style="margin-top:30px;" align="center">
         <label >Manuální ovládání</label>
       </div>
-      <div align="center">
-        <button style="margin:0.5%;height:75px; width:25%; " onclick="moveup()">Y+</button><br>
-        <button style="margin:0.5%;height:75px; width:25%;" onclick="moveleft()">X-</button>
-        <button style="margin:0.5%;height:75px; width:25%;">..</button>
-        <button style="margin:0.5%;height:75px; width:25%; " onclick="moveright()">X+</button><br>
-        <button style="margin:0.5%;height:75px; width:25%; " onclick="movedown()">Y-</button>
+      <div id="demo"  align="center">
+        <button type="button" onclick="sendData(2)" style="margin:0.5%;height:75px; width:25%;" >Y+</button><br>
+        <button type="button" onclick="sendData(5)" style="margin:0.5%;height:75px; width:25%;" >X+</button>
+        <button type="button" onclick="sendData(4)" style="margin:0.5%;height:75px; width:25%;" >Stát</button>
+        <button type="button" onclick="sendData(3)" style="margin:0.5%;height:75px; width:25%;" >X-</button><br>
+        <button type="button" onclick="sendData(6)" style="margin:0.5%;height:75px; width:25%;" >Y-</button>
       </div>
+      
     </div>
   </body>
 </html>
