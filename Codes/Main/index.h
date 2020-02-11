@@ -274,9 +274,9 @@ const char MAIN_page[] PROGMEM = R"=====(
       </div>
       <div id="demo"  align="center">
         <button type="button" onclick="sendData(2)" style="margin:0.5%;height:75px; width:25%;" >Y+</button><br>
-        <button type="button" onclick="sendData(5)" style="margin:0.5%;height:75px; width:25%;" >X+</button>
+        <button type="button" onclick="sendData(5)" style="margin:0.5%;height:75px; width:25%;" >X-</button>
         <button type="button" onclick="sendData(4)" style="margin:0.5%;height:75px; width:25%;" >Stát</button>
-        <button type="button" onclick="sendData(3)" style="margin:0.5%;height:75px; width:25%;" >X-</button><br>
+        <button type="button" onclick="sendData(3)" style="margin:0.5%;height:75px; width:25%;" >X+</button><br>
         <button type="button" onclick="sendData(6)" style="margin:0.5%;height:75px; width:25%;" >Y-</button>
       </div>
       
