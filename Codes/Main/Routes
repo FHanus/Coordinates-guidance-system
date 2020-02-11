@@ -2,7 +2,7 @@
 void basicRoute(){
   tlacitka();
   // Časovač + oběh
-  if(runallowed){
+  if(runallowed){ 
     // 0 - Načtení výchozího bodu
     if(poradnik == 0){
       if((oldPos[0]==0)&&(oldPos[1]==0)){
@@ -85,7 +85,7 @@ void basicRoute(){
           if(previousMillis+50<millis()){
             merX[0] = Xaxis.currentPosition();
             phase2=4;  
-          } 
+          }
         } 
         if(Xaxis.currentPosition()==27750){
           lastPosStr = Yaxis1.currentPosition();
@@ -223,8 +223,8 @@ void basicRoute(){
         if(Yaxis1.currentPosition()==(strd[0][1]-(offsetY))){
           motorStop('Y');
           if(previousMillis + 1000 < millis()){
-            /*
-            Serial.print("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+            
+            /*Serial.print("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
             Serial.print("X otvoru ");
             Serial.print("0");
             Serial.print(": ");
@@ -233,8 +233,8 @@ void basicRoute(){
             Serial.print("0");
             Serial.print(": ");
             Serial.println(strd[0][1]);
-            Serial.print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
-            */
+            Serial.print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");*/
+            
             poradnik = 2;
           }
         }
@@ -256,21 +256,23 @@ void basicRoute(){
         // Krokování + měření v ose X
         if((not digitalRead(koncak1)) or (not digitalRead(koncak2))){
           if(digitalRead(senzor)==0){
-            motorStep('X',Xaxis.currentPosition()+((smerX)*(grid)),4110);
+            motorStep('X',Xaxis.currentPosition()+((smerX)*(grid)),3500);
           }
           if(digitalRead(senzor)==1){
-            if((sq((Xaxis.currentPosition())-(strd[0][0]))) + (sq((Yaxis1.currentPosition())-(strd[0][1])))<=(sq(14000))){
-              phase = 0;
-              poradnik = 3;
+            if((sq((Xaxis.currentPosition())-(strd[0][0]))) + (sq((Yaxis1.currentPosition())-(strd[0][1])))<=(sq(14400))){
+              if(digitalRead(senzor)==1){// to tu prostě muselo být znovu, asi se kód zadrhne při počítání na moc dlouhou dobu a hodnota se změní
+                phase = 0;
+                poradnik = 3;
+              }
             }
-            if((sq((Xaxis.currentPosition())-(strd[0][0]))) + (sq((Yaxis1.currentPosition())-(strd[0][1])))>(sq(14000))){
-              motorStep('X',Xaxis.currentPosition()+((smerX)*(grid)),4110);
+            if((sq((Xaxis.currentPosition())-(strd[0][0]))) + (sq((Yaxis1.currentPosition())-(strd[0][1])))>(sq(14400))){
+              motorStep('X',Xaxis.currentPosition()+((smerX)*(grid)),3500);
             }           
           }
         }
         // Krok dále v ose Y a otočení směru při naražení hrany v ose X
         if((digitalRead(koncak2)) && (smerX == 1)){
-          motorStep('Y',Yaxis1.currentPosition()+(grid),2666);
+          motorStep('Y',Yaxis1.currentPosition()+(grid),2500);
           if((Yaxis1.currentPosition()%(grid)) == 0){
             motorStop('Y');
             smerX = -1;
@@ -278,7 +280,7 @@ void basicRoute(){
         }
         // Krok dále v ose Y a otočení směru při naražení hrany v ose X
         if((digitalRead(koncak1)) && (smerX == -1)){
-          motorStep('Y',Yaxis2.currentPosition()+(grid),2666);
+          motorStep('Y',Yaxis2.currentPosition()+(grid),2500);
           if((Yaxis1.currentPosition()%(grid)) == 0){
             motorStop('Y');
             smerX = 1;
@@ -318,20 +320,17 @@ void basicRoute(){
     if(poradnik == 3){
       // Načtení výchozího bodu a inicializace.
       if(phase == 0){
-        if(digitalRead(senzor)==1){
-          motorStop('Z'); 
-          lastPos[0] = Xaxis.currentPosition();
-          lastPos[1] = Yaxis1.currentPosition();
-          phase = 1;  
-        } 
+        motorStop('Z'); 
+        lastPos[0] = Xaxis.currentPosition();
+        lastPos[1] = Yaxis1.currentPosition();
+        phase = 1;  
       }
       // Najetí kousek od kraje což bude využíváno jako výchozí bod.
       if(phase == 1){
         if(Xaxis.currentPosition()!=(lastPos[0]+((smerX)*1000))){             
-          motorStep('X',Xaxis.currentPosition()+((smerX)*1000),2500);
+          motorStep('X',Xaxis.currentPosition()+((smerX)*1000),1800);
         }
         else{
-          motorStop('X');
           phase=2;
         }       
       } 
@@ -347,14 +346,13 @@ void basicRoute(){
       // Jede ve směru dokud nenarazí na hranu = Bod 1 na X.
       if(phase == 3){
         if(digitalRead(senzor)==1){
-          motorStep('X',Xaxis.currentPosition()+((smerX)*(100)),2500);
+          motorStep('X',Xaxis.currentPosition()+((smerX)*(100)),1800);
           lastPosWD[0]=Xaxis.currentPosition();    
           previousMillis=millis();  
         }
         if(digitalRead(senzor)==0){
-          if(previousMillis+50<millis()){
-            motorStop('X');
-            for(int i=0; i<17; i++){
+          if(previousMillis+10<millis()){
+            for(int i=0; i<12; i++){
               mathValX = sq((lastPos[0]+((smerX)*1000))-strd[i][0]);
               mathValY = sq(lastPos[1]-strd[i][1]);
               if(mathValX + mathValY<=(sq(1950))){
@@ -370,27 +368,25 @@ void basicRoute(){
       // Jede zpět proti směru až na výchozí bod měření.
       if(phase == 4){
         if(Xaxis.currentPosition()!=(lastPos[0]+((smerX)*1500))){
-          motorStep('X',(lastPos[0]+((smerX)*1500)),2500);
+          motorStep('X',(lastPos[0]+((smerX)*1500)),1800);
         }
         else{
-          motorStop('X');
           phase=5;
         }        
       }
       // Jede ve směru dokud nenarazí na hranu = Bod 2 na X.
       if(phase == 5){
         if(digitalRead(senzor)==1){
-          motorStep('X',Xaxis.currentPosition()-((smerX)*(100)),2500);
+          motorStep('X',Xaxis.currentPosition()-((smerX)*(100)),1800);
           lastPosWD[0]=Xaxis.currentPosition();  
           previousMillis=millis();    
         }
         if(digitalRead(senzor)==0){
-          if(previousMillis+50<millis()){
-            motorStop('X');
+          if(previousMillis+10<millis()){
             merX[1] = lastPosWD[0]; 
             phase=6;
           }   
-        }        
+        }     
       }
       // Dopočítání středu na ose X.   
       if(phase == 6){
@@ -411,12 +407,11 @@ void basicRoute(){
       // Najetí středu na ose X.
       if(phase == 7){
         if(Xaxis.currentPosition()!=(strd[strdporadi][0]-(offsetX))){
-          motorStep('X',(strd[strdporadi][0]-(offsetX)),2500);
+          motorStep('X',(strd[strdporadi][0]-(offsetX)),1800);
           previousMillis = millis();
         }
         if(Xaxis.currentPosition()==(strd[strdporadi][0]-(offsetX))){
-          motorStop('X');
-          if(previousMillis + 100 < millis()){
+          if(previousMillis + 10 < millis()){
             phase = 8;
           }
         }
@@ -424,19 +419,27 @@ void basicRoute(){
       // Jede dolů ve směru Y až po hranu, nalezení prvního bodu pro osu Y.
       if(phase == 8){
         if(digitalRead(senzor)==1){
-          motorStep('Y',Yaxis1.currentPosition()-(100),2000);
+          motorStep('Y',Yaxis1.currentPosition()-(100),1800);
           lastPosWD[1] = Yaxis1.currentPosition();
+          previousMillis = millis();
         }
-        if((digitalRead(senzor)==0) or (digitalRead(koncak3))){
-          merY[0] = lastPosWD[1];
-          lastPosWD[1] = 0;
-          phase=9; 
+        if(digitalRead(senzor)==0){
+          if(previousMillis + 10 < millis()){
+            merY[0] = lastPosWD[1];
+            lastPosWD[1] = 0;
+            phase=9;
+          }
+        }
+        else if(digitalRead(koncak3)==1){
+            merY[0] = lastPosWD[1];
+            lastPosWD[1] = 0;
+            phase=9;
         }        
       }
       // Návrat na pomyslný výchozí bod v Y.
       if(phase == 9){
         if(Yaxis1.currentPosition()!=lastPos[1]){
-          motorStep('Y',lastPos[1],2000);
+          motorStep('Y',lastPos[1],1800);
         }
         if(Yaxis1.currentPosition()==lastPos[1]){
           phase=10;  
@@ -445,45 +448,39 @@ void basicRoute(){
       // Nalezení druhého bodu pro osu Y a dopočítání středu.
       if(phase == 10){
         if(digitalRead(senzor)==1){
-          motorStep('Y',Yaxis1.currentPosition()+(100),2000);
+          motorStep('Y',Yaxis1.currentPosition()+(100),1800);
           lastPosWD[1] = Yaxis1.currentPosition();
+          previousMillis = millis();
         }
-        if((digitalRead(senzor)==0) or (digitalRead(koncak4))){
-          merY[1] = lastPosWD[1];
-          strd[strdporadi][1]=merY[0] + ((merY[1] - merY[0])/2);
-          phase=12; 
-        }        
+        if((digitalRead(senzor)==0)or(digitalRead(koncak1)==1)){
+          if(previousMillis + 10 < millis()){
+            merY[1] = lastPosWD[1];
+            strd[strdporadi][1]=merY[0] + ((merY[1] - merY[0])/2);
+            phase=12;
+          }
+        }       
       }
-      // Návrat na X na opačnou hranu výchozímu bodu.
+      // Návrat na Y na opačnou hranu výchozímu bodu.
       if(phase == 12){
         if(Yaxis1.currentPosition()!=lastPos[1]){
-          motorStep('Y',lastPos[1],2000);
+          motorStep('Y',lastPos[1],1800);
         }
         if(Yaxis1.currentPosition()==lastPos[1]){
-          motorStop('Y');
-          phase=14;
+          phase=13;
         }          
       }
-      // Návrat na Y do výchozího bodu.
+      // Návrat na X do výchozího bodu.
       if(phase == 13){
         if(Xaxis.currentPosition()!=merX[0]+(smerX*500)){
-          motorStep('X',merX[0]+(smerX*500),2500);
+          motorStep('X',merX[0]+(smerX*2000),1800);
         }
         if(Xaxis.currentPosition()==merX[0]+(smerX*500)){
-          motorStop('X');
-          phase=13;
+          phase=14;
         }
       }
       // Vynulování a ukončení měření.
       if(phase == 14){
-        lastPos[0] = 0;
-        lastPos[1] = 0;
-        merX[0] = 0;
-        merX[1] = 0;
-        merY[0] = 0; 
-        merY[1] = 0;
-        /*
-        Serial.print("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+        /*Serial.print("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
         Serial.print("X otvoru ");
         Serial.print(strdporadi);
         Serial.print(": ");
@@ -492,8 +489,15 @@ void basicRoute(){
         Serial.print(strdporadi);
         Serial.print(": ");
         Serial.println(strd[strdporadi][1]);
-        Serial.print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
-        */
+        Serial.print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");*/
+
+        lastPos[0] = 0;
+        lastPos[1] = 0;
+        merX[0] = 0;
+        merX[1] = 0;
+        merY[0] = 0; 
+        merY[1] = 0;
+
         strdporadi = strdporadi + 1;
       
         poradnik = 2;
@@ -524,8 +528,29 @@ void basicRoute(){
     }
     if(runM==0){
       poradnikMan=1;
-      motorStop('Z');
+      
+      if(KrokMan == "Yp"){
+        motorStep('Y',Yaxis1.currentPosition()+100,1200);
+        motorStop('X');   
+      }
+      if(KrokMan == "Ym"){
+        motorStep('Y',Yaxis1.currentPosition()-100,1200); 
+        motorStop('X'); 
+      }
+      if(KrokMan == "Xp"){
+        motorStep('X',Xaxis.currentPosition()+100,1200);     
+        motorStop('Y');
+      }
+      if(KrokMan == "Xm"){
+        motorStep('X',Xaxis.currentPosition()-100,1200);
+        motorStop('Y');
+      }
+      if(KrokMan == "S"){
+        motorStop('Z');  
+      }
+      else{
+        motorStop('Z');
+      }
     }
-  }
-    
+  }   
 }
