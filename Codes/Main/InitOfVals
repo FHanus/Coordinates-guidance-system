@@ -6,8 +6,8 @@
     #include <WebServer.h>
 
 // Údaje k AP
-    const char* ssid = "hanusfi16";
-    const char* password = "dmp2020";
+    const char* ssid = "ESP-hanusfi16";
+    const char* password = "dmp20202";
     WebServer server(80);
 
 // Piny motorů
@@ -36,7 +36,7 @@
     bool runallowed = false;
 
 // Jak jemně krokuje (1000=1cm)
-    int grid = 3100;
+    int grid = 3100;  
 
 // Směr krokování
     int smerX = 1;
@@ -55,10 +55,11 @@
     int mathValX = 0;
     int mathValY = 0;
 
+    bool DeBounce[10] = {0,0,0,0,0,0,0,0,0,0};
+
 // Proměnné středů
     int strdporadi = 1;
-    int strd[17][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
-    //int strd[17][2] = {{100,100},{101,102},{103,4},{5,6},{7,8},{1,1},{11,12},{1,14},{15,16},{17,10},{19,20},{21,22},{23,24},{25,26},{27,28},{29,30},{31,32}};
+    int strd[13][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
     String message = (String(strd[0][0]) + "," + String(strd[0][1]));
     String mest;
     
@@ -97,3 +98,11 @@
     int unsigned long previousMillisTimer = 0;
 
 // Proměnné pro chod manuálu
+    String desiredPos;
+    String oldDesiredPos;
+    int poradnikMan = 0;
+    String readString;
+    int nume = 0;
+    int oldPos[2] = {0,0};
+    bool runM = 0;
+    String KrokMan;
