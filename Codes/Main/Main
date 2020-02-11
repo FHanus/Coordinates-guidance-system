@@ -11,7 +11,7 @@ void handleRoot() {
 
 void handlevalues() {
   message = (String(strd[0][0]) + "," + String(strd[0][1])); 
-  for(int i=1; i<17;i++){
+  for(int i=1; i<13;i++){
     for(int d=0; d<2;d++){
       if((strd[i][d])!=0){
         mest = String(strd[i][d]);         
@@ -71,6 +71,23 @@ void handleLED() {
     runallowed = false;  
  }
 
+ if(t_state == "2"){
+   KrokMan = "Yp";
+ }
+ if(t_state == "3"){
+    KrokMan = "Xm";
+ }
+ if(t_state == "4"){
+   KrokMan = "S";
+ }
+ if(t_state == "5"){
+    KrokMan = "Xp";
+ }
+ if(t_state == "6"){
+    KrokMan = "Ym";
+ }
+
+
  // Pošle webovou stránku serveru
  server.send(200, "text/plane", led0State);
  server.send(200, "text/plane", led1State);  
@@ -107,8 +124,8 @@ void setup() {
   server.on("/", handleRoot);      
   server.on("/setLED", handleLED);
   server.on("/readValues", handlevalues);
-  //server.on("/action_page", handleForm);
   server.on("/form", handleForm);
+
   server.begin();                  
   Serial.println("HTTP server started");
 
@@ -169,4 +186,5 @@ void Task1code( void * pvParameters ){
 }
 void loop(){
   basicRoute();
+  delayMicroseconds(25);
 }
