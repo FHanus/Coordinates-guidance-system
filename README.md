@@ -9,10 +9,10 @@ Simplified 3D scanner.
 Working coordinates system, that detects holes and their coordinates.
 Used for cleaning clogged cooler pipes.
 
-* Microcontroller: ESP32, programming in Arduino IDE. Using AccelStepper and Adafruit VL53L0X libraries.
-* Sensor to detect distance: vl53l0x (ToF)
+* Microcontroller: ESP32, programming in Arduino IDE. Using AccelStepper library.
+* Sensor to edge of a hole: IR line follower sensor.
 * Movement: NEMA16 and NEMA17 motors with GT2 belt pulleys and belt, controlled by A4988 motor drivers.
-* Model: Aluminium frame with PLA parts
+* Model: Aluminium frame with PLA printed parts
 
 ## Parts
 
