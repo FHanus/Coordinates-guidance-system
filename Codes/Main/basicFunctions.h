@@ -1,6 +1,5 @@
 // Funkce pro vypnutí X motorů, Y motoru či všech zároveň
 void motorStop(char axis) {
-    // Y
     if (axis == 'Y'){
         Yaxis1.stop();
         Yaxis2.stop();
@@ -8,13 +7,11 @@ void motorStop(char axis) {
         Yaxis2.disableOutputs();
         digitalWrite(enableY, HIGH);
     }
-    // X
     if (axis == 'X'){
         Xaxis.stop();
         Xaxis.disableOutputs(); 
         digitalWrite(enableX, HIGH);
     }
-    // X i Y
     if (axis == 'Z'){
         Yaxis1.stop();
         Yaxis2.stop();
@@ -28,18 +25,15 @@ void motorStop(char axis) {
 }
 // Funkce pro zapnutí X motorů, Y motoru či všech zároveň
 void motorStart(char axis) {
-    // Y
     if (axis == 'Y'){
         Yaxis1.enableOutputs(); 
         Yaxis2.enableOutputs(); 
         digitalWrite(enableY, LOW);
     }
-    // X
     if (axis == 'X'){
         Xaxis.enableOutputs(); 
         digitalWrite(enableX, LOW);
     }
-    // BOTH X AND Y
     if (axis == 'Z'){
         Yaxis1.enableOutputs(); 
         Yaxis2.enableOutputs(); 
@@ -241,21 +235,10 @@ void tlacitka(){
       valB = 1;
       valG = 0;
 
-        poradnik = 0;
-        merX[0] = 0;   
-        merX[1] = 0;               
-        merY[0] = 0;   
-        merY[1] = 0;   
-        lastPos[0] = 0;   
-        lastPos[1] = 0;   
-        lastPosWD[0] = 0;   
-        lastPosWD[1] = 0;   
-        mathValX = 0;
-        mathValY = 0;
+      RunToLastPos=1; 
 
-        oldPos[0]=Xaxis.currentPosition();
-        oldPos[1]=Yaxis1.currentPosition();
-
+      oldPos[0]=Xaxis.currentPosition();
+      oldPos[1]=Yaxis1.currentPosition();
 
       poradnikMan=1;
       runM=0;
