@@ -16,13 +16,11 @@ Used for cleaning clogged cooler pipes.
 
 ## Parts
 
-* ***Main***    -> Split code to step and measure. More uncluttered. Includes main file.
+* ***Code***    -> Full measuring code.
 
 * ***Inventor - DMP.zip***    -> 3D model.
 
-* ***hanusfi16.doc***        -> Research document.
-
-* ***SchemaDMP.brd***  -> PCB
+* ***PCB.zip***  -> Scheme and printed circuit board layout
 
 
 ## Development progress
