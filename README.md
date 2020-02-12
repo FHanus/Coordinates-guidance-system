@@ -26,6 +26,9 @@ Used for cleaning clogged cooler pipes.
 
 
 ## Development progress
+* 11/02/2020
+    * Finished code. The project is done (apart from some little bugs).
+ 
 * 21/01/2020
     * Split core usage between them and running web with measuring simultaneously.
  
