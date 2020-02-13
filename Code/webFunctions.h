@@ -10,7 +10,8 @@ void handlevalues() {
   for(int i=1; i<13;i++){
     for(int d=0; d<2;d++){
       if((strd[i][d])!=0){
-        mest = (String(strd[i][d])/100);         
+        mest = String(strd[i][d]); 
+        mest.remove(3, 2);
       }
       else{
         mest = ("N/A"); 
