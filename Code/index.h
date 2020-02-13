@@ -48,9 +48,9 @@ const char MAIN_page[] PROGMEM = R"=====(
       <!-- ======================== Tabulka ======================== -->
         <table style="margin-top:20px; width:92.8%; margin-left:3.6%; ">
           <tr>
-            <th style="height:45px; width:30%">Cislo stredu</th>
-            <th style="height:45px; width:25%">X souradnice [mm]</th>
-            <th style="height:45px; width:25%">Y souradnice [mm]</th>
+            <th style="height:45px; width:25%">Cislo stredu</th>
+            <th style="height:45px; width:30%">X souradnice [mm]</th>
+            <th style="height:45px; width:30%">Y souradnice [mm]</th>
           </tr>
           
           <tr>
