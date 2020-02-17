@@ -45,6 +45,17 @@ const char MAIN_page[] PROGMEM = R"=====(
   </script>
   <body>
     <div id="Page1">
+    
+      <!-- ======================== BRNK TEST ======================== -->
+	
+	  <script>
+	    if(
+	      document.getElementById(shown).style.display='block';
+	      document.getElementById(hidden).style.display='none';
+	      return false;
+	    }
+	  </script>
+	  
       <!-- ======================== Tabulka ======================== -->
         <table style="margin-top:20px; width:92.8%; margin-left:3.6%; ">
           <tr>
@@ -183,13 +194,14 @@ const char MAIN_page[] PROGMEM = R"=====(
               };
               xhttp.open("GET", "setLED?LEDstate="+led, true);
               xhttp.send();
-            }  
+            }
           <!-- ===== Funkce načítání hodnot do tabulky ===== -->
             setInterval(function(){ getData();},2000); 
             function getData() {
               var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                   if (this.readyState == 4 && this.status == 200) {
+		    document.getElementById("W0").innerHTML = this.responseText.split(",")[0];
                     document.getElementById("X0").innerHTML = this.responseText.split(",")[0];
                     document.getElementById("Y0").innerHTML = this.responseText.split(",")[1];
                     document.getElementById("X1").innerHTML = this.responseText.split(",")[2];
@@ -229,6 +241,8 @@ const char MAIN_page[] PROGMEM = R"=====(
               xhttp.open("GET", "readValues", true);
               xhttp.send();
             }
+		    var message = document.getElementById("W0").innerHTML = this.responseText.split(",")[0];
+		    if message == "0";
         </script>
    
     </div>
