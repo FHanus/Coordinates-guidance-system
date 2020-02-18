@@ -110,7 +110,7 @@ bool initializeLocation(char axis){
     if (axis == 'Y'){
       // Za jaké podmínky jdou X motory do záporu
       if(not digitalRead(koncak3)) {
-        motorStep('Y',-100000,3500);
+        motorStep('Y',-100000,4122);
       }
       // Podmínka pro moment, kdy narazí na koncový spínač
       else if (digitalRead(koncak3)) {
@@ -124,7 +124,7 @@ bool initializeLocation(char axis){
     if (axis == 'X'){
       // Za jaké podmínky jde Y motor do záporu
       if(not digitalRead(koncak1)) {
-        motorStep('X',-100000,3500);
+        motorStep('X',-100000,4122);
       }
       // Podmínka pro moment, kdy narazí na koncový spínač
       if (digitalRead(koncak1)) {
@@ -141,7 +141,7 @@ bool initializeLocation(char axis){
       }
       // Za jaké podmínky jdou Y motory do záporu
       if(not digitalRead(koncak3)) {
-        motorStep('Y',-100000,3500);
+        motorStep('Y',-100000,4122);
       }
       // Podmínka pro moment, kdy narazí na koncový spínač
       if (digitalRead(koncak3)) {
@@ -152,7 +152,7 @@ bool initializeLocation(char axis){
       }
       // Za jaké podmínky jde X motor do záporu
       if((not digitalRead(koncak1)) && (digitalRead(koncak3))) {
-        motorStep('X',-100000,3500);
+        motorStep('X',-100000,4122);
       }
       // Podmínka pro moment, kdy narazí na koncový spínač
       if (digitalRead(koncak1)) {
@@ -190,7 +190,7 @@ int measureMax(char axis){
         return(0);
       }        
     }
-    // BOTH X AND Y //
+    // X i Y //
     if (axis == 'Z'){
       // Za jaké podmínky vyhodnotí hodnotu "1" jako splněno a tudíž automaticky opouští tuto funkci
       if((digitalRead(koncak4) == 1) && (digitalRead(koncak2) == 1)) {
@@ -222,6 +222,25 @@ void tlacitka(){
     if ( (buttonStateG == 1) && (lastButtonStateG == 0) ){
       valG = 1;
       valB = 0;
+
+      if(PovMereni==0){
+        strd[0][0]=0;
+        strd[0][1]=0;
+        phase2 = 0;
+        poradnik = 0;
+        merX[0] = 0;   
+        merX[1] = 0;               
+        merY[0] = 0;   
+        merY[1] = 0;   
+        lastPos[0] = 0;   
+        lastPos[1] = 0;   
+        lastPosWD[0] = 0;   
+        lastPosWD[1] = 0;   
+        mathValX = 0;
+        mathValY = 0;
+        PovMereni = 1;
+      }
+
       poradnikMan=1;
       runM=0;
       runallowed = true;
@@ -248,7 +267,8 @@ void tlacitka(){
     lastButtonStateB = buttonStateB;
 
   // Červené tlačítko
-    buttonStateR = digitalRead(buttonPinR);                                         
+    buttonStateR = digitalRead(buttonPinR); 
+    // Počítání bliknutí od začátku držení                                        
     if (( buttonStateR == HIGH ) and (reset_count < 10) and (valB == 1)){
       if(previousMillisTimer+150<=millis()){
         valR = 1;
@@ -265,36 +285,50 @@ void tlacitka(){
       valR = HIGH;
       digitalWrite(ledPinR, valR);
     }
+    // Pokud je tlačítko puštěno před doblikáním
     if (( (lastButtonStateR == HIGH) and (buttonStateR == LOW) and (reset_count < 10)) or ( (valB != 1) ) ){
       reset_count = 0;
     }
+    // Po doblikání zde resetuje vše
     if ( (lastButtonStateR == HIGH) and (buttonStateR == LOW) and (reset_count == 10) and (valB == 1)){
-      reset_count = 0;
-      poradnik = 0;
-      phase = 0;
-      phase2 = 0;
-      phase3 = 0;
-      merX[0] = 0;   
-      merX[1] = 0;               
-      merY[0] = 0;   
-      merY[1] = 0;   
-      lastPos[0] = 0;   
-      lastPos[1] = 0;   
-      lastPosWD[0] = 0;   
-      lastPosWD[1] = 0;   
-      mathValX = 0;
-      mathValY = 0;
-      strdporadi = 1;
-      runM=0;
-      oldPos[0] = 0;
-      oldPos[1] = 0;
-      nume = 0;
-      poradnikMan = 0;
+      reset_count = 0; 
       for(int i=0;i<17;i++){
         for(int d=0;d<2;d++){
           strd[i][d]= 0;   
         }
       }
+      merX[0] = 0;   
+      merX[1] = 0;               
+      merY[0] = 0;   
+      merY[1] = 0;  
+      lastPosSynch[1] =0;         
+      lastPosSynch[0] = 0;    
+      lastPos[0]=0; 
+      lastPos[1]=0;                   
+      lastPosWD[0]=0;   
+      lastPosWD[1]=0;             
+      mathValX = 0;                     
+      mathValY = 0;     
+      PovMereni = 1;                     
+      strdporadi = 1;                                                                                     
+      message = "Test";                                                                                                                                                                           
+      poradnik = 0;          
+      phase2 = 0;             
+      phase3 = 0;           
+      previousMillis = 0;
+      previousMillisS = 0;          
+      previousMicrosMain = 0;
+      valG = 0;                       
+      valB = 1;
+      valR = 1;
+      buttonStateG = 0;    
+      buttonStateB = 1;
+      buttonStateR = 0;
+      lastButtonStateG = 0;  
+      lastButtonStateB = 0;
+      lastButtonStateR = 0;
+      previousMillisTimer = 0;
+      RunToLastPos = 0;   
     }
     lastButtonStateR = buttonStateR; 
 }
