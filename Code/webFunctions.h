@@ -12,14 +12,9 @@ void handlevalues() {
     for(int d=0; d<2;d++){
       if((strd[i][d])!=0){
         mest = String(strd[i][d]); 
-        Serial.println(strd[i][d]);
-        if(mest.length() == 5){mest.remove(3);}
-        if(mest.length() == 4){mest.remove(2);}
-        if(mest.length() == 3){mest.remove(1);}
-        
-        if ((mest.length() > 5)or(mest == "-10000")) {
-          mest = "Mimo dosah";        
-        }
+        if(mest.length() == 5){mest.remove(3,3);}
+          else if(mest.length() == 4){mest.remove(2,2);}
+            else if ((mest.length() > 5)or(mest == "-10000")or(mest.length() < 4)){mest = "Mimo dosah";}
       }
       else{
         mest = ("N/A"); 
@@ -39,7 +34,7 @@ void handleLED() {
  String t_state = server.arg("LEDstate"); 
 
  // START
- if((t_state == "0")&&(oldt_state != "0")){
+ if((t_state == "0")&&((oldt_state != "0")or(runallowed == false))){
     led0State = "ON";
     led1State = "OFF";
     KrokMan = "S";
@@ -71,7 +66,7 @@ void handleLED() {
     runallowed = true;
  }
  // PAUSE
- if((t_state == "1")&&(oldt_state != "1")){
+ if((t_state == "1")&&((oldt_state != "1")or(runallowed == true))){
     led0State = "OFF";
     led1State = "ON";
     valG = 0;
