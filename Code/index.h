@@ -1,6 +1,5 @@
 const char MAIN_page[] PROGMEM = R"=====(
 <!DOCTYPE html>
-
 <html>
 <head> 
 <!-- ======================== Načtení vzhledu tlačítek z tutorial webu ======================== -->
@@ -45,100 +44,95 @@ const char MAIN_page[] PROGMEM = R"=====(
   </script>
   <body>
     <div id="Page1">
-    
-      <!-- ======================== BRNK TEST ======================== -->
-	
-	  <script>
-	    if(
-	      document.getElementById(shown).style.display='block';
-	      document.getElementById(hidden).style.display='none';
-	      return false;
-	    }
-	  </script>
-	  
+      <!-- ======================== Varování ======================== -->
+        
+        <div style="margin-top:20px;" align="center">
+          <label><span id="W0"></label>
+        </div>
+
       <!-- ======================== Tabulka ======================== -->
-        <table style="margin-top:20px; width:92.8%; margin-left:3.6%; ">
+        <table style="margin-top:15px; width:92.8%; margin-left:3.6%; ">
           <tr>
-            <th style="height:45px; width:25%">Cislo stredu</th>
+            <th style="height:45px; width:30%">Cislo stredu</th>
             <th style="height:45px; width:30%">X souradnice [mm]</th>
             <th style="height:45px; width:30%">Y souradnice [mm]</th>
           </tr>
           
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 0</td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X0">N/A</span></td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y0">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px; ">Stred 0</td>
+            <td bgcolor="#D3D3D3" style="height:45px; "><span id="X0">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px; "><span id="Y0">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Stred 1</td>
-            <td style="height:45px; width:25%"><span id="X1">N/A</span></td>
-            <td style="height:45px; width:25%"><span id="Y1">N/A</span></td>
+            <td style="height:45px; ">Stred 1</td>
+            <td style="height:45px; "><span id="X1">N/A</span></td>
+            <td style="height:45px; "><span id="Y1">N/A</span></td>
           </tr>
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 2</td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X2">N/A</span></td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y2">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px; ">Stred 2</td>
+            <td bgcolor="#D3D3D3" style="height:45px; "><span id="X2">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px; "><span id="Y2">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Stred 3</td>
-            <td style="height:45px; width:25%"><span id="X3">N/A</span></td>
-            <td style="height:45px; width:25%"><span id="Y3">N/A</span></td>
+            <td style="height:45px; ">Stred 3</td>
+            <td style="height:45px; "><span id="X3">N/A</span></td>
+            <td style="height:45px; "><span id="Y3">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 4</td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X4">N/A</span></td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y4">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px; ">Stred 4</td>
+            <td bgcolor="#D3D3D3" style="height:45px; "><span id="X4">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px; "><span id="Y4">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Stred 5</td>
-            <td style="height:45px; width:25%"><span id="X5">N/A</span></td>
-            <td style="height:45px; width:25%"><span id="Y5">N/A</span></td>
+            <td style="height:45px; ">Stred 5</td>
+            <td style="height:45px; "><span id="X5">N/A</span></td>
+            <td style="height:45px; "><span id="Y5">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 6</td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X6">N/A</span></td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y6">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px;">Stred 6</td>
+            <td bgcolor="#D3D3D3" style="height:45px;"><span id="X6">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px;"><span id="Y6">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Stred 7</td>
-            <td style="height:45px; width:25%"><span id="X7">N/A</span></td>
-            <td style="height:45px; width:25%"><span id="Y7">N/A</span></td>
+            <td style="height:45px;">Stred 7</td>
+            <td style="height:45px;"><span id="X7">N/A</span></td>
+            <td style="height:45px;"><span id="Y7">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 8</td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X8">N/A</span></td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y8">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px;">Stred 8</td>
+            <td bgcolor="#D3D3D3" style="height:45px;"><span id="X8">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px;"><span id="Y8">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Stred 9</td>
-            <td style="height:45px; width:25%"><span id="X9">N/A</span></td>
-            <td style="height:45px; width:25%"><span id="Y9">N/A</span></td>
+            <td style="height:45px;">Stred 9</td>
+            <td style="height:45px;"><span id="X9">N/A</span></td>
+            <td style="height:45px;"><span id="Y9">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 10</td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X10">N/A</span></td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y10">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px;">Stred 10</td>
+            <td bgcolor="#D3D3D3" style="height:45px;"><span id="X10">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px;"><span id="Y10">N/A</span></td>
           </tr>
           
           <tr>
-            <td style="height:45px; width:30%">Stred 11</td>
-            <td style="height:45px; width:25%"><span id="X11">N/A</span></td>
-            <td style="height:45px; width:25%"><span id="Y11">N/A</span></td>
+            <td style="height:45px;">Stred 11</td>
+            <td style="height:45px;"><span id="X11">N/A</span></td>
+            <td style="height:45px;"><span id="Y11">N/A</span></td>
           </tr>
                 
           <tr>
-            <td bgcolor="#D3D3D3" style="height:45px; width:30%">Stred 12</td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="X12">N/A</span></td>
-            <td bgcolor="#D3D3D3" style="height:45px; width:25%"><span id="Y12">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px;">Stred 12</td>
+            <td bgcolor="#D3D3D3" style="height:45px;"><span id="X12">N/A</span></td>
+            <td bgcolor="#D3D3D3" style="height:45px;"><span id="Y12">N/A</span></td>
           </tr>
           
         </table>
@@ -194,55 +188,45 @@ const char MAIN_page[] PROGMEM = R"=====(
               };
               xhttp.open("GET", "setLED?LEDstate="+led, true);
               xhttp.send();
-            }
+            }  
           <!-- ===== Funkce načítání hodnot do tabulky ===== -->
             setInterval(function(){ getData();},2000); 
             function getData() {
               var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                  if (this.readyState == 4 && this.status == 200) {
-		    document.getElementById("W0").innerHTML = this.responseText.split(",")[0];
-                    document.getElementById("X0").innerHTML = this.responseText.split(",")[0];
-                    document.getElementById("Y0").innerHTML = this.responseText.split(",")[1];
-                    document.getElementById("X1").innerHTML = this.responseText.split(",")[2];
-                    document.getElementById("Y1").innerHTML = this.responseText.split(",")[3];
-                    document.getElementById("X2").innerHTML = this.responseText.split(",")[4];
-                    document.getElementById("Y2").innerHTML = this.responseText.split(",")[5];
-                    document.getElementById("X3").innerHTML = this.responseText.split(",")[6];
-                    document.getElementById("Y3").innerHTML = this.responseText.split(",")[7];
-                    document.getElementById("X4").innerHTML = this.responseText.split(",")[8];
-                    document.getElementById("Y4").innerHTML = this.responseText.split(",")[9];
-                    document.getElementById("X5").innerHTML = this.responseText.split(",")[10];
-                    document.getElementById("Y5").innerHTML = this.responseText.split(",")[11];
-                    document.getElementById("X6").innerHTML = this.responseText.split(",")[12];
-                    document.getElementById("Y6").innerHTML = this.responseText.split(",")[13];
-                    document.getElementById("X7").innerHTML = this.responseText.split(",")[14];
-                    document.getElementById("Y7").innerHTML = this.responseText.split(",")[15];
-                    document.getElementById("X8").innerHTML = this.responseText.split(",")[16];
-                    document.getElementById("Y8").innerHTML = this.responseText.split(",")[17];
-                    document.getElementById("X9").innerHTML = this.responseText.split(",")[18];
-                    document.getElementById("Y9").innerHTML = this.responseText.split(",")[19];
-                    document.getElementById("X10").innerHTML = this.responseText.split(",")[20];
-                    document.getElementById("Y10").innerHTML = this.responseText.split(",")[21];
-                    document.getElementById("X11").innerHTML = this.responseText.split(",")[22];
-                    document.getElementById("Y11").innerHTML = this.responseText.split(",")[23];
-                    document.getElementById("X12").innerHTML = this.responseText.split(",")[24];
-                    document.getElementById("Y12").innerHTML = this.responseText.split(",")[25];
-                    document.getElementById("X13").innerHTML = this.responseText.split(",")[26];
-                    document.getElementById("Y13").innerHTML = this.responseText.split(",")[27];
-                    document.getElementById("X14").innerHTML = this.responseText.split(",")[28];
-                    document.getElementById("Y14").innerHTML = this.responseText.split(",")[29];
-                    document.getElementById("X15").innerHTML = this.responseText.split(",")[30];
-                    document.getElementById("Y15").innerHTML = this.responseText.split(",")[31];
-                    document.getElementById("X16").innerHTML = this.responseText.split(",")[32];
-                    document.getElementById("Y16").innerHTML = this.responseText.split(",")[33];
-                  }
-                };
+              xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("W0").innerHTML = this.responseText.split(",")[0];
+                  document.getElementById("X0").innerHTML = this.responseText.split(",")[1];
+                  document.getElementById("Y0").innerHTML = this.responseText.split(",")[2];
+                  document.getElementById("X1").innerHTML = this.responseText.split(",")[3];
+                  document.getElementById("Y1").innerHTML = this.responseText.split(",")[4];
+                  document.getElementById("X2").innerHTML = this.responseText.split(",")[5];
+                  document.getElementById("Y2").innerHTML = this.responseText.split(",")[6];
+                  document.getElementById("X3").innerHTML = this.responseText.split(",")[7];
+                  document.getElementById("Y3").innerHTML = this.responseText.split(",")[8];
+                  document.getElementById("X4").innerHTML = this.responseText.split(",")[9];
+                  document.getElementById("Y4").innerHTML = this.responseText.split(",")[10];
+                  document.getElementById("X5").innerHTML = this.responseText.split(",")[11];
+                  document.getElementById("Y5").innerHTML = this.responseText.split(",")[12];
+                  document.getElementById("X6").innerHTML = this.responseText.split(",")[13];
+                  document.getElementById("Y6").innerHTML = this.responseText.split(",")[14];
+                  document.getElementById("X7").innerHTML = this.responseText.split(",")[15];
+                  document.getElementById("Y7").innerHTML = this.responseText.split(",")[16];
+                  document.getElementById("X8").innerHTML = this.responseText.split(",")[17];
+                  document.getElementById("Y8").innerHTML = this.responseText.split(",")[18];
+                  document.getElementById("X9").innerHTML = this.responseText.split(",")[19];
+                  document.getElementById("Y9").innerHTML = this.responseText.split(",")[20];
+                  document.getElementById("X10").innerHTML = this.responseText.split(",")[21];
+                  document.getElementById("Y10").innerHTML = this.responseText.split(",")[22];
+                  document.getElementById("X11").innerHTML = this.responseText.split(",")[23];
+                  document.getElementById("Y11").innerHTML = this.responseText.split(",")[24];
+                  document.getElementById("X12").innerHTML = this.responseText.split(",")[25];
+                  document.getElementById("Y12").innerHTML = this.responseText.split(",")[26];
+                }
+              };
               xhttp.open("GET", "readValues", true);
               xhttp.send();
             }
-		    var message = document.getElementById("W0").innerHTML = this.responseText.split(",")[0];
-		    if message == "0";
         </script>
    
     </div>
@@ -275,12 +259,12 @@ const char MAIN_page[] PROGMEM = R"=====(
         }
       </style>
       <div style="margin-top:30px;" align="center">
-        <label>  Zadejte číslo požadovaného středu</label>
+        <label>  Zadejte číslo požadovaného středu (0 až 12)</label>
       </div>
       <div align="center">
-        <form method="post" action="/form">  
-          <input type="number" name="position" min="0" max="17">
-          <input type="submit" value="Submit">
+        <form method="post" action="/form"> 
+          <input type="number" name="position" min="0" max="12">
+          <input type="submit" value="Najet">
         </form>
       </div>
       <div style="margin-top:30px;" align="center">
