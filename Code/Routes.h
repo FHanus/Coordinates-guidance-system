@@ -10,6 +10,12 @@ void basicRoute(){
       if((oldPos[0]==Xaxis.currentPosition())&&(oldPos[1]==Yaxis1.currentPosition())){
         RunToLastPos=0;
       }
+      if((oldPos[0]>=Xaxis.currentPosition())&&(digitalRead(koncak2))&&(oldPos[1]>=Yaxis1.currentPosition())&&(digitalRead(koncak4))){
+        RunToLastPos=0;
+      }
+      if((oldPos[0]<=Xaxis.currentPosition())&&(digitalRead(koncak1))&&(oldPos[1]<=Yaxis1.currentPosition())&&(digitalRead(koncak3))){
+        RunToLastPos=0;
+      }
       // V případě požadavku na najetí zpět na pozici před uvedením do oběhu
       if((oldPos[0]!=Xaxis.currentPosition())or(oldPos[1]!=Yaxis1.currentPosition())){
         motorStep('X',oldPos[0],3489);
@@ -304,32 +310,23 @@ void basicRoute(){
           } 
           // Koncový bod, konec oběhu 
           if((digitalRead(koncak4)) && (digitalRead(koncak2))){
-            motorStop('Z');
-            valG = 0;
-            valB = 1; 
-
-            poradnik = 0;
-            merX[0] = 0;   
-            merX[1] = 0;               
-            merY[0] = 0;   
-            merY[1] = 0;   
-            lastPos[0] = 0;   
-            lastPos[1] = 0;   
-            lastPosWD[0] = 0;   
-            lastPosWD[1] = 0;   
-            mathValX = 0;
-            mathValY = 0;
-
-            oldPos[0]=Xaxis.currentPosition();
-            oldPos[1]=Yaxis1.currentPosition();
-
-
-            runM=0;
-            poradnikMan=1;
-            digitalWrite(ledPinG, valG);
-            digitalWrite(ledPinB, valB);
-            runallowed = false;  
+            phase3 = 2;
+ 
           }
+        }
+        // Konec
+        if(phase3 == 2){
+          RunToLastPos=1;
+          motorStop('Z');
+          valG = 0;
+          valB = 1; 
+
+          oldPos[0]=Xaxis.currentPosition();
+          oldPos[1]=Yaxis1.currentPosition();
+
+          digitalWrite(ledPinG, valG);
+          digitalWrite(ledPinB, valB);
+          runallowed = false; 
         }
       }
       // 3 - Měřicí oběh nad otvorem
