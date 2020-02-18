@@ -36,10 +36,11 @@
     bool runallowed = false;
 
 // Jak jemně krokuje (1000=1cm)
-    int grid = 3100;  
+    int grid = 3000;  
 
 // Směr krokování
     int smerX = 1;
+    int smerMerCh = 1;
 
 // Offsety umožňující správné najíždění v případě nerovnoměrného senzoru (IR)
     int offsetX = 0; 
@@ -48,16 +49,19 @@
 // Kombinační proměnné pro počítání středů
     int merX[2] = {0,0};                    //Pro uložení první a druhé souřadnice hran na jednotlivých osách          
     int merY[2] = {0,0};
+    int lastPosSynch[2] = {0,0};            // Pro uložení pozice při přechodu do hledání chladiče
     int lastPos[2]={0,0};                   // Pro uložení pozice při přechodu do měření středu, pro následující návrat kde se skoncilo v oběhu
     int lastPosWD[2]={0,0};                 // Pro uložení poslední pozice kdy byl ještě otvor při měření středu
 
     int mathValX = 0;                       // Pro výpočty středů na jednotlivých osách
     int mathValY = 0;
+    
+    bool PovMereni = 1;                        // Jestli bylo povoleno měření (jestli je chladič správně umístěn, nebo není)
 
 // Proměnné středů
     int strdporadi = 1;                                                                                      // Pořadí aktuálně měřeného středu. 1 protože 0 se jede mimo tento oběh a je to střed chladiče.
     int strd[13][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};       // Inicializace pole s hodnotami středů
-    String message = (String(strd[0][0]) + "," + String(strd[0][1]));                                        // Message je string zobrazovaný na webu v tabulce středů
+    String message = "Test";                                                                                 // Message je string zobrazovaný na webu v tabulce středů
     String mest;                                                                                             // Pomocná proměnná při načítání do stringu message
     
 // Sekvenční proměnné pro měření
@@ -67,7 +71,8 @@
     int phase3 = 0;             // S. proměnná pro rozkouskování vyhledávání děr 
 
 // Proměnné časování
-    unsigned long previousMillis = 0;       
+    unsigned long previousMillis = 0;
+    unsigned long previousMillisS = 0;          
     unsigned long previousMicrosMain = 0;
 
 // Proměnné pro chod tlačítek
@@ -94,7 +99,9 @@
     int reset_count = 0;                            // Počítadlo pro hezké blikání resetu
     int unsigned long previousMillisTimer = 0;      // Další stopky
 
-    bool RunToLastPos = 0;                          // Jestli má nebo nemá být najížděna poslední hodnota (Při přepnutí z pause na run pokud byl udělán nějaký krok manuálem)          
+    bool RunToLastPos = 0;                          // Jestli má nebo nemá být najížděna poslední hodnota (Při přepnutí z pause na run pokud byl udělán nějaký krok manuálem)     
+
+    String oldt_state;    
 
 // Proměnné pro chod manuálu
     String desiredPos;                  // Načtení požaddovaného středu z web formu
