@@ -1,250 +1,256 @@
-// Základní jednoduchý oběh od načtení chladiče pro oběh nad ním
+// Základní oběh od načtení chladiče po oběh nad ním
 void basicRoute(){
   // Inicializuje zda nebyla zmáčklá nějaká ta tlačítka
   tlacitka();
   // Pokud svítí zelené tlačítko - Oběh
-  if(runallowed){ 
+  if(runallowed){
     // Pokud je před oběhem třeba najet poslední pozice před uvedením do pause 
     if(RunToLastPos==1){
-      // Pokud se po něm sice chce aby něco najížděl, ale není co, nebo ještě ani nevyjel.. rovnou skok do runu
-      if((oldPos[0]==0)&&(oldPos[1]==0)){
+      // skok do oběhu
+      if((oldPos[0]==Xaxis.currentPosition())&&(oldPos[1]==Yaxis1.currentPosition())){
         RunToLastPos=0;
       }
-      // V případě požadavku na najetí zpět na pozici před uvedením do runu
-      if((oldPos[0]!=0)or(oldPos[1]!=0)){
-        if((Xaxis.currentPosition()!=oldPos[0])or(Yaxis1.currentPosition()!=oldPos[1])){
-          motorStep('X',oldPos[0],3489);
-          motorStep('Y',oldPos[1],2889);
-          previousMillis = millis();
-        }
-        if((Xaxis.currentPosition()==oldPos[0])&&(Yaxis1.currentPosition()==oldPos[1])){
-          motorStop('Z');
-          RunToLastPos=0;       
-        }
+      // V případě požadavku na najetí zpět na pozici před uvedením do oběhu
+      if((oldPos[0]!=Xaxis.currentPosition())or(oldPos[1]!=Yaxis1.currentPosition())){
+        motorStep('X',oldPos[0],3489);
+        motorStep('Y',oldPos[1],2889);
       }
     }
     // Oběh při zaplém zeleném tlačítku START
     if(RunToLastPos==0){ 
       // 0 - Načtení výchozího bodu
       if(poradnik == 0){
-        // Najetí nuly pokud ještě nebylo měřeno
-       // if((oldPos[0]==0)&&(oldPos[1]==0)){
-          if(initializeLocation('Z') == 1){
-            initializeLocation('Z');
-            previousMillis = millis();
-          }
-          if((initializeLocation('Z') == 0)&&(digitalRead(koncak1))&&(digitalRead(koncak3))){
-            motorStop('Z');
-            if(previousMillis+200 < millis()){
-              phase2 = 0;
-              poradnik = 1;
-            }
+        if(initializeLocation('Z') == 1){
+          initializeLocation('Z');
+          previousMillis = millis();
+        }
+        if((initializeLocation('Z') == 0)&&(digitalRead(koncak1))&&(digitalRead(koncak3))){
+          motorStop('Z');
+          if(previousMillis+200 < millis()){
+            phase2 = 0;
+            poradnik = 1;
           }
         }
-       /* // Pokud již bylo
-        if((oldPos[0]!=0)or(oldPos[1]!=0)){
-          if((Xaxis.currentPosition()!=oldPos[0])or(Yaxis1.currentPosition()!=oldPos[1])){
-            motorStep('X',oldPos[0],3489);
-            motorStep('Y',oldPos[1],2889);
-            previousMillis = millis();
-          }
-          if((Xaxis.currentPosition()==oldPos[0])&&(Yaxis1.currentPosition()==oldPos[1])){
-            motorStop('Z');
-            if(previousMillis+200 < millis()){
-              if((strd[0][0] != 0)&&(strd[0][1] != 0)){
-                phase3 = 1;
-                poradnik = 2;
-              }
-              if((strd[0][0] == 0)or(strd[0][1] == 0)){
-                phase2 = 0;
-                poradnik = 1;
-              }        
-            }
-          }
-        }
-      }*/
+      }
       // 1 - Nalezení kruhového chladiče
       if(poradnik == 1){
-        // Inicializace, zda byl chladič již měřen. Pokud ne, nájezd do výchozí pozice pro osu X.
+        // Inicializace, zda byl chladič již měřen.
         if (phase2==0){
           if((strd[0][0] != 0)&&(strd[0][1] != 0)){
             poradnik = 2;
           }
-          if(Yaxis1.currentPosition()!=3500){
-            motorStep('Y',3500,3489);
-          }
-          if(Yaxis1.currentPosition()==3500){
-            motorStop('Z');
-            phase2=1;
-          }
-        }
-        // Pokud je v této výchozí pozici měřič již nad chladičem, přesune se na opačnou stranu po ose Y.
-        if (phase2==1){
-          if(digitalRead(senzor)==0){
-            phase2 = 2;
-          }
-          if(digitalRead(senzor)==1){
-            phase2 = 3;       
-          }
-        }
-        // Přesun na opačnou stranu (jen pokud byla minulá kontrola pozitivní)
-        if (phase2==2){
-          if(Yaxis1.currentPosition()!=25000){
-            motorStep('Y',25000,3489);
-          }
-          if(Yaxis1.currentPosition()==25000){
-            motorStop('Y');
+          if(merX[0]==0){
             phase2=1;
           }
         }
         // Jede dokud nezaznamená hranu, ta bude prvním bodem pro osu X
-        if (phase2==3){
+        if (phase2==1){
           if(digitalRead(senzor)==1){
             motorStep('X',Xaxis.currentPosition()+(100),4122);
             previousMillis=millis();
           }
-          if(digitalRead(senzor)==0){
+          if((digitalRead(senzor)==0)&&(not digitalRead(koncak1))){
             if(previousMillis+50<millis()){
               merX[0] = Xaxis.currentPosition();
-              phase2=4;  
+              phase2=3;  
             }
           }
-        } 
-        // Přejede na opačnou stranu na ose X
-        if (phase2==4){
-          if((digitalRead(koncak2)==0) && (Xaxis.currentPosition()<(27500))){
-            motorStep('X',207500,4122);
+          if((digitalRead(senzor)==0)&&(digitalRead(koncak1))&&(digitalRead(koncak3))){
+            smerMerCh = -1;
+            phase2=150;
           }
-          if((digitalRead(koncak2)==1) or (Xaxis.currentPosition()>=(27500))){
-            motorStop('X');
-            phase2 = 5;
-          }      
+          if(digitalRead(koncak2)){
+            lastPosSynch[1] = Yaxis1.currentPosition();
+            phase2=2;
+          }
         }
+        //  Přesun na opačnou stranu v případě chladiče v tomto místě
+        if (phase2==150){
+          if(digitalRead(koncak4)==0){
+            motorStep('Y',Yaxis1.currentPosition()+100,4122);
+          }
+          if(digitalRead(koncak4)){
+            lastPosSynch[1] = Yaxis1.currentPosition();
+            phase2 = 2;
+          } 
+        }  
+        // Přesun na opačnou stranu a o 3 cm výš (jen pokud nebyl pořád nalezen chladič)
+        if (phase2==2){
+          if((Yaxis1.currentPosition()!=(lastPosSynch[1]+(smerMerCh*3000)))&&(digitalRead(koncak1))){
+            motorStep('Y',(lastPosSynch[1]+(smerMerCh*3000)),4122);
+          }
+          if(not digitalRead(koncak1)) {
+            motorStep('X',Xaxis.currentPosition()-(100),4122);
+          }
+          if((Yaxis1.currentPosition()==lastPosSynch[1]+(smerMerCh*3000))&&(digitalRead(koncak1))){
+            phase2=1;            
+          } 
+        }
+        // Přejede na opačnou stranu na ose X 
+        if (phase2==3){
+          if(digitalRead(koncak2)==0){
+            motorStep('X',Xaxis.currentPosition()+100,4122);
+          }
+          if((digitalRead(koncak2)==1)&&(digitalRead(senzor)==1)){
+            phase2 = 4;
+          }
+          if((digitalRead(koncak2)==1)&&(digitalRead(senzor)==0)){
+            smerMerCh = -1;
+            phase2 = 150;
+          }
+        } 
         // Vrací se do zaznamenání hrany = druhý bod pro X a dopočítá střed pro osu X
-        if (phase2==5){
+        if (phase2==4){
           if(digitalRead(senzor)==1){
             motorStep('X',Xaxis.currentPosition()-(100),4122);
             previousMillis=millis();
           }
-          else if(digitalRead(senzor)==0){
+          if((digitalRead(senzor)==0)&&(not digitalRead(koncak1))){
             if(previousMillis+50<millis()){
               merX[1] = Xaxis.currentPosition();
+  
               if((merX[1] - merX[0])<500){
-                phase2=35;
+                lastPosSynch[1] = Yaxis1.currentPosition();
+                phase2=2;
               }
               strd[0][0] =merX[0] + ((merX[1] - merX[0])/2);
-              phase2=6;
+              phase2=5;
             }  
+          }     
+        }
+        // Vynulování X
+        if (phase2==5){
+          if(strd[0][0]>=13000){
+            if(digitalRead(koncak1)==0){
+              motorStep('X',Xaxis.currentPosition()-100,4122);
+            }
+            if(digitalRead(koncak1)){
+              lastPosSynch[0] = Xaxis.currentPosition();
+              smerMerCh = 1;
+              phase2 = 6;
+            } 
+          }
+          if(strd[0][0]<13000){
+            if(digitalRead(koncak2)==0){
+              motorStep('X',Xaxis.currentPosition()+100,4122);
+            }
+            if(digitalRead(koncak2)){
+              lastPosSynch[0] = Xaxis.currentPosition();
+              smerMerCh = -1;
+              phase2 = 6;
+            } 
+            
           }
         }
         // Vynulování Y
         if (phase2==6){
-          if(initializeLocation('Y') == 1){
-            initializeLocation('Y');
+          if(digitalRead(koncak3)==0){
+            motorStep('Y',Yaxis1.currentPosition()-100,4122);
           }
-
-          if(initializeLocation('Y') == 0){
+          if(digitalRead(koncak3)==1){
             phase2=7;
           }
         }
-        // Nájezd do výchozího bodu pro osu Y. MOŽNÉ ZAPNOUT - ZPOMALUJE CHOD
-        if (phase2==7){/*
-          if(Xaxis.currentPosition()!=(27500)){
-            motorStep('X',27500,4122);
-          }
-          if((Xaxis.currentPosition()==(27500))or(digitalRead(koncak4)==1)){
-            motorStop('X');*/
-            phase2=8;
-          //}
-        }
-        // Rozcestník, pokud již je nad chladičem, přejede po ose X na opačnou stranu.
-        if (phase2==8){
-          if(digitalRead(senzor)==0){
-            phase2 = 9;
-          }
+        // Jede dokud nezaznamená hranu, ta bude prvním bodem pro osu Y
+        if (phase2==7){
           if(digitalRead(senzor)==1){
-            phase2 = 10;       
-          }
-        }
-        // Příjezd na opačnou stranu po X (jen pokud byla minulá podmínka splněna)
-        if (phase2==9){
-          if(Xaxis.currentPosition()!=6000){
-            motorStep('X',6000,4122);
-          }
-          if(Xaxis.currentPosition()==6000){
-            motorStop('X');
-            phase2=8;
-          }
-        }
-        // Jede po Y dokud nenarazí na hranu = první měřící bod pro osu Y
-        if (phase2==10){
-          if(digitalRead(senzor)==1){
-            motorStep('Y',Yaxis1.currentPosition()+(100),3489);
+            motorStep('Y',Yaxis1.currentPosition()+(100),4122);
             previousMillis=millis();
           }
-          if(digitalRead(senzor)==0){
+          if((digitalRead(senzor)==0)&&(not digitalRead(koncak3))){
             if(previousMillis+50<millis()){
               merY[0] = Yaxis1.currentPosition();
-              phase2=11;
-            }  
-          }          
-        }
-        // Přejede na druhou stranu po ose Y
-        if (phase2==11){
-          if(Yaxis1.currentPosition()!=26100){
-            motorStep('Y',26100,3489);
+              phase2=9;  
+            }
           }
-          if(Yaxis1.currentPosition()==26100){
-            motorStop('Y');
-            phase2 = 12;
-          }      
+          if(digitalRead(koncak4)){
+            lastPosSynch[0] = Xaxis.currentPosition();
+            phase2=8;
+          }
+        } 
+        // Přesun na opačnou stranu a o 3 cm dál (jen pokud nebyl pořád nalezen chladič)
+        if (phase2==8){
+          if((Xaxis.currentPosition()!=(lastPosSynch[0]+(smerMerCh*3000)))&&(digitalRead(koncak3))){
+            motorStep('X',(lastPosSynch[0]+(smerMerCh*3000)),4122);
+          }
+          if(not digitalRead(koncak3)) {
+            motorStep('Y',Yaxis1.currentPosition()-(100),4122);
+          }
+          if((Xaxis.currentPosition()==lastPosSynch[0]+(smerMerCh*3000))&&(digitalRead(koncak3))){
+            phase2=7;            
+          } 
         }
-        // Vrací se po ose Y dokud nenarazí na hranu což je druhým bodem pro osu Y, z něhož dopočítá střed na Y.
-        if (phase2==12){
+        // Příjezd na opačnou stranu po Y 
+        if (phase2==9){
+          if(digitalRead(koncak4)==0){
+            motorStep('Y',Yaxis1.currentPosition()+100,4122);
+          }
+          if(digitalRead(koncak4)==1){
+            phase2 = 10;
+          } 
+        }
+        // Jede zpět po Y dokud nenarazí na hranu = druhý měřící bod pro osu Y
+        if (phase2==10){
           if(digitalRead(senzor)==1){
-            motorStep('Y',Yaxis1.currentPosition()-(100),3489);
+            motorStep('Y',Yaxis1.currentPosition()-(100),4122);
             previousMillis=millis();
           }
           if(digitalRead(senzor)==0){
             if(previousMillis+50<millis()){
               merY[1] = Yaxis1.currentPosition();
               strd[0][1] =merY[0] + ((merY[1] - merY[0])/2);
-              phase2=13; 
-            } 
-          }    
+              phase2=13;
+            }  
+          }          
         }
-        // Najede na ose X na změřený střed
+        // Najede na ose Y na změřený střed
         if (phase2==13){
+          if(Yaxis1.currentPosition()!=(strd[0][1]-(offsetY))){
+            motorStep('Y',(strd[0][1]-(offsetY)),4122);
+            previousMillis = millis();
+          }
+          if(Yaxis1.currentPosition()==(strd[0][1]-(offsetY))){
+            motorStop('Y');
+            phase2=14;
+          }
+        }
+        // Najede na ose X na změřený střed a po pauze pokračuje dál.
+        if (phase2==14){
           if(Xaxis.currentPosition()!=(strd[0][0]-(offsetX))){
             motorStep('X',(strd[0][0]-(offsetX)),4122);
           }
           if(Xaxis.currentPosition()==(strd[0][0]-(offsetX))){
             motorStop('X');
-            phase2=14;
-          }
-        }
-        // Najede na ose Y na změřený střed (+offset z důvodu posunutí senzoru) a po pauze pokračuje dál.
-        if (phase2==14){
-          if(Yaxis1.currentPosition()!=(strd[0][1]-(offsetY))){
-            motorStep('Y',(strd[0][1]-(offsetY)),3489);
-            previousMillis = millis();
-          }
-          if(Yaxis1.currentPosition()==(strd[0][1]-(offsetY))){
-            motorStop('Y');
-            if(previousMillis + 1000 < millis()){
-              
-              /*Serial.print("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
-              Serial.print("X otvoru ");
-              Serial.print("0");
-              Serial.print(": ");
-              Serial.println(strd[0][0]);
-              Serial.print("Y otvoru ");
-              Serial.print("0");
-              Serial.print(": ");
-              Serial.println(strd[0][1]);
-              Serial.print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");*/
-              
-              poradnik = 2;
+            if((previousMillis + 1000 < millis())&&(PovMereni==1)){
+              if((strd[0][0]<12800)or(strd[0][0]>18100)){
+                PovMereni=0;
+                motorStop('Z');
+                valG = 0;
+                valB = 1; 
+
+                runM=0;
+                poradnikMan=1;
+                digitalWrite(ledPinG, valG);
+                digitalWrite(ledPinB, valB);
+
+                runallowed = false; 
+              }
+              if((strd[0][1]>13700)or(strd[0][1]<12400)){
+                PovMereni=0;
+                motorStop('Z');
+                valG = 0;
+                valB = 1; 
+
+                runM=0;
+                poradnikMan=1;
+                digitalWrite(ledPinG, valG);
+                digitalWrite(ledPinB, valB);
+
+                runallowed = false; 
+              }
+              if(PovMereni==1){
+                poradnik = 2;
+              } 
             }
           }
         }
@@ -265,23 +271,24 @@ void basicRoute(){
           // Krokování + měření v ose X
           if((not digitalRead(koncak1)) or (not digitalRead(koncak2))){
             if(digitalRead(senzor)==0){
-              motorStep('X',Xaxis.currentPosition()+((smerX)*(grid)),3500);
+              motorStep('X',Xaxis.currentPosition()+((smerX)*(grid)),4122);
             }
             if(digitalRead(senzor)==1){
-              if((sq((Xaxis.currentPosition())-(strd[0][0]))) + (sq((Yaxis1.currentPosition())-(strd[0][1])))<=(sq(14400))){
+              if((sq((Xaxis.currentPosition())-(strd[0][0]))) + (sq((Yaxis1.currentPosition())-(strd[0][1])))<=(sq(14300))){
                 if(digitalRead(senzor)==1){// to tu prostě muselo být znovu, asi se kód zadrhne při počítání na moc dlouhou dobu a hodnota se změní
                   phase = 0;
                   poradnik = 3;
                 }
               }
-              if((sq((Xaxis.currentPosition())-(strd[0][0]))) + (sq((Yaxis1.currentPosition())-(strd[0][1])))>(sq(14400))){
-                motorStep('X',Xaxis.currentPosition()+((smerX)*(grid)),3500);
+              if((sq((Xaxis.currentPosition())-(strd[0][0]))) + (sq((Yaxis1.currentPosition())-(strd[0][1])))>(sq(14300))){
+                motorStep('X',Xaxis.currentPosition()+((smerX)*(grid)),4122);
               }           
             }
           }
           // Krok dále v ose Y a otočení směru při naražení hrany v ose X
           if((digitalRead(koncak2)) && (smerX == 1)){
-            motorStep('Y',Yaxis1.currentPosition()+(grid),2500);
+            motorStep('Y',Yaxis1.currentPosition()+(grid),4122);
+            
             if(((Yaxis1.currentPosition()%(grid)) == 0)or(digitalRead(koncak4))){
               motorStop('Y');
               smerX = -1;
@@ -289,7 +296,7 @@ void basicRoute(){
           }
           // Krok dále v ose Y a otočení směru při naražení hrany v ose X
           if((digitalRead(koncak1)) && (smerX == -1)){
-            motorStep('Y',Yaxis2.currentPosition()+(grid),2500);
+            motorStep('Y',Yaxis2.currentPosition()+(grid),4122);
             if(((Yaxis1.currentPosition()%(grid)) == 0)or(digitalRead(koncak4))){
               motorStop('Y');
               smerX = 1;
@@ -358,7 +365,7 @@ void basicRoute(){
             motorStep('X',Xaxis.currentPosition()+((smerX)*(100)),1800);
             lastPosWD[0]=Xaxis.currentPosition();    
             previousMillis=millis();  
-          }
+          } 
           if(digitalRead(senzor)==0){
             if(previousMillis+10<millis()){
               for(int i=0; i<12; i++){
@@ -373,6 +380,14 @@ void basicRoute(){
               phase=4;
             }
           }
+          if(digitalRead(koncak2)==0){
+            previousMillisS = millis();
+          }
+          if((digitalRead(koncak2)==1)&&(digitalRead(senzor)==1)){
+            if(previousMillisS + 50 < millis()){
+              phase = 133;
+            }
+          }          
         }
         // Jede zpět proti směru až na výchozí bod měření.
         if(phase == 4){
@@ -395,7 +410,15 @@ void basicRoute(){
               merX[1] = lastPosWD[0]; 
               phase=6;
             }   
-          }     
+          } 
+          if(digitalRead(koncak1)==0){
+            previousMillisS = millis();
+          }
+          if((digitalRead(koncak1)==1)&&(digitalRead(senzor)==1)){
+            if(previousMillisS + 50 < millis()){
+              phase = 133;
+            }
+          }            
         }
         // Dopočítání středu na ose X.   
         if(phase == 6){
@@ -409,7 +432,6 @@ void basicRoute(){
             } 
           }
           else{
-
             poradnik = 2;
           }       
         }
@@ -439,10 +461,13 @@ void basicRoute(){
               phase=9;
             }
           }
-          else if(digitalRead(koncak3)==1){
-              merY[0] = lastPosWD[1];
-              lastPosWD[1] = 0;
-              phase=9;
+          if(digitalRead(koncak3)==0){
+            previousMillisS = millis();
+          }
+          if((digitalRead(koncak3)==1)&&(digitalRead(senzor)==1)){
+            if(previousMillisS + 50 < millis()){
+              phase = 135;
+            }
           }        
         }
         // Návrat na pomyslný výchozí bod v Y.
@@ -461,13 +486,21 @@ void basicRoute(){
             lastPosWD[1] = Yaxis1.currentPosition();
             previousMillis = millis();
           }
-          if((digitalRead(senzor)==0)or(digitalRead(koncak1)==1)){
+          if(digitalRead(senzor)==0){
             if(previousMillis + 10 < millis()){
               merY[1] = lastPosWD[1];
               strd[strdporadi][1]=merY[0] + ((merY[1] - merY[0])/2);
               phase=12;
             }
-          }       
+          }
+          if(digitalRead(koncak4)==0){
+            previousMillisS = millis();
+          }
+          if((digitalRead(koncak4)==1)&&(digitalRead(senzor)==1)){
+            if(previousMillisS + 50 < millis()){
+              phase = 135;
+            }
+          }                 
         }
         // Návrat na Y na opačnou hranu výchozímu bodu.
         if(phase == 12){
@@ -486,6 +519,58 @@ void basicRoute(){
           if(Xaxis.currentPosition()==merX[0]+(smerX*500)){
             phase=14;
           }
+        }
+        // Nulování v případě "mimo střed" pro X
+        if(phase == 133){
+          if(Xaxis.currentPosition()!=lastPos[0]){
+            motorStep('X',lastPos[0],1800);
+          }
+          if(Yaxis1.currentPosition()!=(lastPos[1]+grid)){
+            motorStep('Y',(lastPos[1]+grid),1800);
+          }
+          if((Yaxis1.currentPosition()==(lastPos[1]+grid))&&(Xaxis.currentPosition()==lastPos[0])){
+            phase=134;
+          }
+        }
+        if(phase == 134){
+          lastPos[0] = 0;
+          lastPos[1] = 0;
+          merX[0] = 0;
+          merX[1] = 0;
+          merY[0] = 0; 
+          merY[1] = 0;
+
+          strd[strdporadi][0]=-10000;
+          strd[strdporadi][1]=-10000;
+
+          strdporadi = strdporadi + 1;
+          poradnik = 2;
+        }
+        // Nulování v případě "mimo střed" pro Y
+        if(phase == 135){
+          if(Yaxis1.currentPosition()!=lastPos[1]){
+            motorStep('Y',lastPos[1],1800);
+          }
+          if(Xaxis.currentPosition()!=merX[1]+(smerX*500)){
+            motorStep('X',merX[1]+(smerX*500),1800);
+          }
+          if((Xaxis.currentPosition()==merX[1]+(smerX*500))&&(Yaxis1.currentPosition()==lastPos[1])){
+            phase=136;
+          }
+        }
+        if(phase == 136){
+          lastPos[0] = 0;
+          lastPos[1] = 0;
+          merX[0] = 0;
+          merX[1] = 0;
+          merY[0] = 0; 
+          merY[1] = 0;
+
+          strd[strdporadi][0]=-10000;
+          strd[strdporadi][1]=-10000;
+
+          strdporadi = strdporadi + 1;
+          poradnik = 2;
         }
         // Vynulování a ukončení měření.
         if(phase == 14){
@@ -516,7 +601,7 @@ void basicRoute(){
       }
       // Druhá část - najetí čísla
       if(poradnikMan==2){
-        if((Yaxis1.currentPosition()==strd[nume][1]-offsetY)&&(Xaxis.currentPosition()==strd[nume][0])){
+        if(((Yaxis1.currentPosition()==strd[nume][1]-offsetY)&&(Xaxis.currentPosition()==strd[nume][0]))or((strd[nume][1]==0)&&(strd[nume][0]==0)&&(Yaxis1.currentPosition()==0)&&(Yaxis1.currentPosition()==0))){
           motorStop('Z');
           runM=0;
         }
@@ -550,9 +635,6 @@ void basicRoute(){
       }
       if(KrokMan == "S"){
         motorStop('Z');  
-      }
-      else{
-        motorStop('Z');
       }
     }
   }   
